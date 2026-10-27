@@ -1,0 +1,113 @@
+
+1. Input checks: bad rows are skipped and reported, never fatal
+  PASS an empty slide is skipped and reported
+  PASS a slide with no title uses its first bullet as the title
+  PASS a duplicate slide number is renumbered and reported
+  PASS a non-object row is skipped
+  PASS an objective with no text is skipped
+  PASS an example with no text is skipped
+  PASS the deck still builds from the good rows
+  PASS settings out of range are refused with a reason
+
+2. Which publisher slides cover which objective
+  PASS LO6.1 (define, customers) gets slides 3 and 4
+  PASS LO6.2 (five generic strategies) gets slide 5 only
+  PASS LO6.3 (cost leadership, differentiation, value chain) gets slides 6 and 8
+  PASS LO6.4 (risks, stuck in the middle) gets slides 10 and 11
+  PASS LO6.5 (apply to a regional firm) has no publisher slide and is covered by your vignette
+  PASS title, objectives and summary slides are recognised and left out
+  PASS slides 7 and 9 are reported as unused, not silently dropped
+  PASS without a vignette, LO6.5 becomes a "needs your material" slide
+  PASS your correction wins: LO6.2 can be given slides 5 and 9
+  PASS assigning a slide that does not exist is reported
+  PASS a stricter match threshold changes the proposal
+
+3. The draft deck in your format
+  PASS 23 slides: 22 for students, 1 instructor-only answer key
+  PASS order follows your format: title, decide first, objectives, then each objective
+  PASS slide 6 is cut to your 5-bullet limit and the sixth bullet moves to your notes
+  PASS a 14-word bullet is clipped at your 12-word limit and the full wording kept in notes
+  PASS the publisher deck never explains "value chain", so a draft explainer is added for LO6.3
+  PASS concepts used but never explained are flagged in your notes
+  PASS anticipated responses, probes and misconceptions come from your prior notes
+  PASS examples come from your bank: LO6.2 Harbor Line, LO6.3 Gulf Coast Fuel, LO6.4 Causeway
+  PASS no example fits LO6.1, so it asks for yours instead of inventing one
+  PASS your own prompts are used once; LO6.2 and LO6.3 get drafts in your style
+  PASS the LO6.5 decision point uses the disguised vignette
+  PASS class time adds up to exactly 75 minutes
+  PASS and to exactly 50 or 110 when you change the class length
+  PASS a 3-bullet limit trims more slides
+  PASS turning explainers off removes the draft explainer
+
+4. Your approval gate and versions
+  PASS nothing approved: 23 blockers
+  PASS everything approved except the missing example: still blocked by it
+  PASS adding your example clears the gap and marks it as your material
+  PASS with every slide approved, final export opens
+  PASS editing a slide after approval sends it back for review
+  PASS or you can skip the example; it is recorded, not hidden
+  PASS a new version lists exactly what changed (a 4-bullet limit changes slides 5 and 6)
+  PASS an identical rebuild reports no change
+
+5. PowerPoint export (real .pptx)
+  PASS a final export before approval is refused with reasons
+  PASS a draft is always allowed, named DRAFT
+  PASS the student copy has no answer key, no notes and no empty gap slides
+  PASS publisher slides carry the source line in the student copy
+  PASS the final instructor copy keeps notes and hides the answer key with a tag
+  PASS the .pptx reads back with every slide title in order
+  PASS speaker notes survive the round trip
+  PASS the hidden answer key is still hidden after reading back
+  PASS "Gulf Coast Fuel & Go" is escaped and reads back intact
+  PASS a deck read from a .pptx can be fed straight back in as publisher slides
+
+6. Word export (real .docx instructor guide)
+  PASS the guide is refused as final until approval, allowed after
+  PASS its timing table adds up to 75 minutes
+  PASS it carries the source record for every slide
+  PASS the .docx contains the document, styles and numbering parts
+  PASS and the guide text itself
+
+7. Vignette and teaching note from one master record
+  PASS the student case uses only disguised names
+  PASS the epilogue is in the teaching note only
+  PASS the default case and note pass every check
+  PASS typing the real company name is blocked
+  PASS a real surname on its own is caught too
+  PASS the epilogue figure in the student copy is blocked as an instructor-only fact
+  PASS changing 27% to 25% is caught as a contradiction of F4
+  PASS the teaching note cannot contradict the record either
+  PASS a figure that is in no fact is blocked as unsupported
+  PASS generic phrasing is flagged (as a warning)
+  PASS a paragraph that repeats itself is flagged
+  PASS three-week and 10 miles are read as figures and matched
+  PASS clean case: both Word files are produced
+  PASS the teaching note carries the disguised master record
+  PASS a leaking case cannot be exported as final
+
+8. Research: provenance and citations
+  PASS citations are read, including several in one bracket and page numbers
+  PASS the planted fake citation is blocked as likely fabricated
+  PASS AI draft paragraphs must be reviewed before final
+  PASS replace the fake with a verified source and review the drafts: final opens
+  PASS a direct quotation without a page number is blocked
+  PASS with the page number it passes
+  PASS a paragraph marked "verified source" that cites nothing is blocked
+  PASS a citation not in your library is blocked
+  PASS citing your confidential field notes warns that they never leave your workspace
+  PASS the reference list holds verified public sources only: Barney 1991 and Porter 1985
+
+9. Privacy and running cost
+  PASS names, student IDs, emails and phone numbers are removed before any model call
+  PASS student information is restricted, unpublished research private, public data public
+  PASS 4 decks, 2 cases, 4 memos on Claude Opus 5.5: $3.18 of model use + $14 server = $17.18 a month
+  PASS a cheaper model lowers it
+  PASS nonsense inputs are refused with a reason
+
+10. The file format itself
+  PASS CRC-32 matches the standard check value
+  PASS a package with a duplicate part is refused
+  PASS a file that is not a .pptx is refused with a reason
+  PASS every package starts with [Content_Types].xml
+
+91 checks: 91 passed, 0 failed

@@ -1,0 +1,539 @@
+{
+  "_note": "Invented sample data for a live demo. The course section, publisher deck, examples, vignette, people and companies are invented. The three Porter and Barney entries in the library are real, widely cited works; one library entry is a planted fake that the checker must block.",
+  "meta": {
+    "course": "MAN 4720 Strategic Management (invented section)",
+    "term": "Spring 2027",
+    "author": "Faculty member (you)",
+    "publisher": "Strategy in Practice, 4th ed. (invented publisher sample)",
+    "chapter": "Chapter 6: Business-Level Strategy",
+    "deckTitle": "Business-Level Strategy",
+    "region": "Tampa Bay, Florida"
+  },
+  "objectives": [
+    {
+      "id": "LO6.1",
+      "text": "Define business-level strategy and explain how customers (who, what needs, how) shape it"
+    },
+    {
+      "id": "LO6.2",
+      "text": "Describe the five generic business-level strategies"
+    },
+    {
+      "id": "LO6.3",
+      "text": "Explain how cost leadership and differentiation create value through value chain activities"
+    },
+    {
+      "id": "LO6.4",
+      "text": "Evaluate the risks of each strategy, including being stuck in the middle"
+    },
+    {
+      "id": "LO6.5",
+      "text": "Apply business-level strategy to a regional firm's growth decision"
+    }
+  ],
+  "publisherSlides": [
+    {
+      "n": 1,
+      "title": "Chapter 6: Business-Level Strategy",
+      "bullets": [],
+      "notes": ""
+    },
+    {
+      "n": 2,
+      "title": "Learning Objectives",
+      "bullets": [
+        "Define business-level strategy",
+        "Describe the generic strategies",
+        "Explain value creation",
+        "Evaluate strategy risks"
+      ],
+      "notes": ""
+    },
+    {
+      "n": 3,
+      "title": "What Is Business-Level Strategy?",
+      "bullets": [
+        "An integrated and coordinated set of commitments and actions",
+        "Used to gain a competitive advantage by exploiting core competencies in specific product markets",
+        "Answers how the firm will compete, not where it will compete",
+        "Every firm needs one for each business it runs"
+      ],
+      "notes": "Contrast with corporate-level strategy, which answers where the firm competes."
+    },
+    {
+      "n": 4,
+      "title": "Customers: Who, What and How",
+      "bullets": [
+        "Who: which customer groups will we serve",
+        "What: which customer needs will we satisfy",
+        "How: which core competencies will we use to satisfy those needs",
+        "Customer groups can be segmented by demographics, geography, lifestyle and purchase behavior"
+      ],
+      "notes": "Ask students to segment a familiar market before showing the list."
+    },
+    {
+      "n": 5,
+      "title": "Five Generic Strategies",
+      "bullets": [
+        "Cost leadership",
+        "Differentiation",
+        "Focused cost leadership",
+        "Focused differentiation",
+        "Integrated cost leadership and differentiation",
+        "The choice depends on competitive scope (broad or narrow) and the source of advantage (cost or uniqueness)"
+      ],
+      "notes": "Draw the 2x2 on the board: scope against source of advantage."
+    },
+    {
+      "n": 6,
+      "title": "Cost Leadership",
+      "bullets": [
+        "Produce goods or services at the lowest cost relative to rivals",
+        "Standardized products for the typical customer in the industry",
+        "Relentless efficiency through scale, tight cost control and simple designs",
+        "Must still offer acceptable quality and features",
+        "Value chain activities: efficient logistics, lean operations and low overhead",
+        "Price can match rivals while margins stay higher"
+      ],
+      "notes": "Stress that low cost is not the same as low price."
+    },
+    {
+      "n": 7,
+      "title": "Cost Leadership and the Five Forces",
+      "bullets": [
+        "Rivals hesitate to compete on price",
+        "Powerful buyers can only push prices down to the next most efficient rival",
+        "Low costs absorb supplier price increases",
+        "Scale deters new entrants",
+        "Lower costs protect against substitutes"
+      ],
+      "notes": ""
+    },
+    {
+      "n": 8,
+      "title": "Differentiation",
+      "bullets": [
+        "Produce goods or services customers perceive as different in ways that matter to them",
+        "Customers pay a premium price for unique features",
+        "Sources include quality, brand image, service, technology and design",
+        "Value chain activities: research and development, marketing and superior service"
+      ],
+      "notes": "The difference must be one customers value enough to pay for."
+    },
+    {
+      "n": 9,
+      "title": "Focus Strategies",
+      "bullets": [
+        "Serve a narrow segment: a buyer group, a product line or a geographic market",
+        "Focused cost leadership: lowest cost within the niche",
+        "Focused differentiation: unique value for the niche",
+        "Works when broad competitors underserve the niche"
+      ],
+      "notes": ""
+    },
+    {
+      "n": 10,
+      "title": "Integrated Cost Leadership and Differentiation",
+      "bullets": [
+        "Low cost and some differentiation at the same time",
+        "Enabled by flexible manufacturing, information networks and total quality management",
+        "Stuck in the middle: neither the lowest cost nor meaningfully different",
+        "Requires real capability in both, not a compromise"
+      ],
+      "notes": ""
+    },
+    {
+      "n": 11,
+      "title": "Risks of Each Strategy",
+      "bullets": [
+        "Cost leadership: technology shifts can erase the cost advantage, and rivals imitate",
+        "Differentiation: the price premium grows too large, or customers stop valuing the difference",
+        "Focus: broad rivals target the niche, or niche needs converge with the broad market",
+        "Integrated: the firm can become stuck in the middle"
+      ],
+      "notes": ""
+    },
+    {
+      "n": 12,
+      "title": "Chapter Summary",
+      "bullets": [
+        "Business-level strategy is about how to compete",
+        "Customers define who, what and how",
+        "Five generic strategies",
+        "Each strategy carries specific risks"
+      ],
+      "notes": ""
+    }
+  ],
+  "concepts": [
+    {
+      "term": "business-level strategy"
+    },
+    {
+      "term": "competitive advantage"
+    },
+    {
+      "term": "core competencies"
+    },
+    {
+      "term": "cost leadership"
+    },
+    {
+      "term": "differentiation"
+    },
+    {
+      "term": "focused cost leadership"
+    },
+    {
+      "term": "focused differentiation"
+    },
+    {
+      "term": "stuck in the middle"
+    },
+    {
+      "term": "value chain",
+      "draftDefinition": [
+        "The linked activities a firm performs to design, make, sell and support what it offers",
+        "Each activity can lower cost or add something customers value",
+        "Cost leaders run them leaner; differentiators invest where customers notice"
+      ],
+      "explainerTitle": "What is the value chain?"
+    },
+    {
+      "term": "five forces"
+    }
+  ],
+  "prior": {
+    "openers": [
+      {
+        "text": "You have $50,000 to open a coffee shop on Bayshore Boulevard. Do you charge $2 or $6 for a latte? Decide before the next slide.",
+        "concepts": [
+          "cost leadership",
+          "differentiation"
+        ],
+        "source": "Your Fall 2025 deck, slide 2"
+      }
+    ],
+    "examples": [
+      {
+        "id": "EX1",
+        "title": "Gulf Coast Fuel & Go (invented)",
+        "text": "Regional convenience chain that wins on price per gallon with no-frills stores and bulk fuel contracts",
+        "concepts": [
+          "cost leadership",
+          "value chain"
+        ],
+        "source": "Your Fall 2025 deck, slide 14"
+      },
+      {
+        "id": "EX2",
+        "title": "Harbor Line Coffee Roasters (invented)",
+        "text": "Small-batch roaster with $6 lattes, origin stories and a waitlist for rare beans",
+        "concepts": [
+          "differentiation",
+          "focused differentiation"
+        ],
+        "source": "Your Fall 2025 deck, slide 17"
+      },
+      {
+        "id": "EX3",
+        "title": "Sunfield Citrus Co-op (invented)",
+        "text": "Sells bulk juice concentrate to private-label grocery brands at the lowest delivered cost",
+        "concepts": [
+          "focused cost leadership"
+        ],
+        "source": "Your teaching notes, Week 6"
+      },
+      {
+        "id": "EX4",
+        "title": "Causeway Outfitters (invented)",
+        "text": "Tried to match big-box prices and run a premium fishing guide service at once; lost on both",
+        "concepts": [
+          "stuck in the middle"
+        ],
+        "source": "Your teaching notes, Week 7"
+      }
+    ],
+    "prompts": [
+      {
+        "concepts": [
+          "business-level strategy"
+        ],
+        "text": "Pick a business you paid this week. Who is its customer, what need does it meet, and how does it meet it?",
+        "source": "Your Fall 2025 deck, slide 6"
+      },
+      {
+        "concepts": [
+          "stuck in the middle"
+        ],
+        "text": "Name a company that tried to be everything to everyone. What happened, and when could you see it coming?",
+        "source": "Your Fall 2025 deck, slide 22"
+      }
+    ],
+    "anticipated": [
+      {
+        "concepts": [
+          "cost leadership"
+        ],
+        "responses": [
+          "Cheap means low quality",
+          "Only big companies can do it"
+        ],
+        "misconception": "Cost leadership means the lowest cost, not the lowest price; the price can match rivals.",
+        "probe": "If your costs are the lowest, why might you still not charge the lowest price?"
+      },
+      {
+        "concepts": [
+          "differentiation"
+        ],
+        "responses": [
+          "Branding is the same as differentiation"
+        ],
+        "misconception": "Differentiation is not just marketing; it must be a difference customers will pay for.",
+        "probe": "Would you still pay more if the logo were removed?"
+      },
+      {
+        "concepts": [
+          "stuck in the middle"
+        ],
+        "responses": [
+          "Doing both is always better"
+        ],
+        "misconception": "An integrated strategy is not a safe middle; without real capability in both it gets stuck.",
+        "probe": "What capability would a firm need to do both at once?"
+      },
+      {
+        "concepts": [
+          "business-level strategy"
+        ],
+        "responses": [
+          "Strategy is the same as the mission statement"
+        ],
+        "misconception": "Business-level strategy is about how to compete in one market, not the company's purpose.",
+        "probe": "Which decision this year would change if the strategy changed?"
+      }
+    ],
+    "activity": {
+      "title": "Strategy map",
+      "student": [
+        "In pairs, place six Tampa Bay businesses on the map: broad or narrow scope, cost or uniqueness",
+        "Be ready to defend one placement in 30 seconds"
+      ],
+      "instructor": [
+        "Hand out the six business cards (invented local firms)",
+        "Circulate; push pairs who put everything in the middle",
+        "Debrief: which placement drew the most disagreement, and why?"
+      ],
+      "source": "Your Fall 2025 activity sheet"
+    },
+    "exit": {
+      "text": "In one sentence: what is the difference between the lowest cost and the lowest price?",
+      "source": "Your exit-ticket bank"
+    },
+    "voice": {
+      "objectivesTitle": "By the end of today you can",
+      "promptStyle": "decision-forcing"
+    }
+  },
+  "vignette": {
+    "workingTitle": "Bayshore Marine Supply: chase price or build the service bay?",
+    "disguise": [
+      {
+        "real": "Bayshore Marine Supply",
+        "disguised": "Pelican Point Marine"
+      },
+      {
+        "real": "Dana Whitfield",
+        "disguised": "Jordan Reyes"
+      },
+      {
+        "real": "Clearwater",
+        "disguised": "a Gulf Coast city"
+      }
+    ],
+    "facts": [
+      {
+        "id": "F1",
+        "text": "Bayshore Marine Supply is a family-owned marine parts retailer in Clearwater, founded in 1994.",
+        "kind": "context",
+        "audience": "both",
+        "source": "Your consulting notes (2023)",
+        "sensitivity": "private"
+      },
+      {
+        "id": "F2",
+        "text": "Annual revenue was $6.8 million in 2025.",
+        "kind": "number",
+        "audience": "both",
+        "source": "Company figures shared with permission",
+        "sensitivity": "private"
+      },
+      {
+        "id": "F3",
+        "text": "Two big-box marine chains opened stores within 10 miles in 2024.",
+        "kind": "event",
+        "audience": "both",
+        "source": "Public news coverage",
+        "sensitivity": "public"
+      },
+      {
+        "id": "F4",
+        "text": "Gross margin fell from 34% to 27% between 2023 and 2025.",
+        "kind": "number",
+        "audience": "both",
+        "source": "Company figures shared with permission",
+        "sensitivity": "private"
+      },
+      {
+        "id": "F5",
+        "text": "The engine repair department earns a 52% margin and has a three-week waitlist.",
+        "kind": "number",
+        "audience": "both",
+        "source": "Your interview with the service manager",
+        "sensitivity": "private"
+      },
+      {
+        "id": "F6",
+        "text": "Online sales are 9% of revenue.",
+        "kind": "number",
+        "audience": "both",
+        "source": "Company figures shared with permission",
+        "sensitivity": "private"
+      },
+      {
+        "id": "F7",
+        "text": "By March, CEO Dana Whitfield must choose: match big-box prices on commodity parts, or expand repair and specialty parts and stop chasing price.",
+        "kind": "decision",
+        "audience": "both",
+        "source": "Your consulting notes (2023)",
+        "sensitivity": "private"
+      },
+      {
+        "id": "F8",
+        "text": "The company expanded the service bay; revenue recovered to $7.4 million in 2026.",
+        "kind": "epilogue",
+        "audience": "instructor",
+        "source": "Follow-up call (2026)",
+        "sensitivity": "private"
+      }
+    ],
+    "questions": [
+      {
+        "lo": "LO6.2",
+        "q": "Which generic strategy is Pelican Point following today? Use two facts from the case.",
+        "analysis": "Mostly broad differentiation drifting toward price matching; the margin fall (F4) shows the cost race it cannot win.",
+        "facts": [
+          "F3",
+          "F4"
+        ]
+      },
+      {
+        "lo": "LO6.4",
+        "q": "What is the risk of matching big-box prices on commodity parts?",
+        "analysis": "Stuck in the middle: the chains have scale (F3), so matching price erodes margin further (F4) without a cost advantage.",
+        "facts": [
+          "F3",
+          "F4"
+        ]
+      },
+      {
+        "lo": "LO6.5",
+        "q": "Recommend a strategy for Jordan Reyes and name the first two value chain changes.",
+        "analysis": "Focused differentiation around service: repair margin and waitlist (F5) signal valued uniqueness; online sales (F6) stay small.",
+        "facts": [
+          "F5",
+          "F6"
+        ]
+      }
+    ]
+  },
+  "library": [
+    {
+      "key": "Porter 1980",
+      "authors": "Porter, M. E.",
+      "year": 1980,
+      "title": "Competitive Strategy: Techniques for Analyzing Industries and Competitors",
+      "venue": "Free Press",
+      "type": "book",
+      "status": "verified",
+      "sensitivity": "public"
+    },
+    {
+      "key": "Porter 1985",
+      "authors": "Porter, M. E.",
+      "year": 1985,
+      "title": "Competitive Advantage: Creating and Sustaining Superior Performance",
+      "venue": "Free Press",
+      "type": "book",
+      "status": "verified",
+      "sensitivity": "public"
+    },
+    {
+      "key": "Barney 1991",
+      "authors": "Barney, J.",
+      "year": 1991,
+      "title": "Firm resources and sustained competitive advantage",
+      "venue": "Journal of Management, 17(1), 99-120",
+      "type": "article",
+      "status": "verified",
+      "sensitivity": "public"
+    },
+    {
+      "key": "Whitlow & Haines 2022",
+      "authors": "Whitlow, R., & Haines, T.",
+      "year": 2022,
+      "title": "Hybrid strategies in Gulf Coast retail (PLANTED FAKE for this demo)",
+      "venue": "suggested by an AI search; no database has it",
+      "type": "article",
+      "status": "not-found",
+      "sensitivity": "public"
+    },
+    {
+      "key": "Field notes 2023",
+      "authors": "Your notes",
+      "year": 2023,
+      "title": "Field notes, Bayshore engagement",
+      "venue": "private notebook",
+      "type": "note",
+      "status": "verified",
+      "sensitivity": "confidential"
+    }
+  ],
+  "memo": [
+    {
+      "id": "P1",
+      "tag": "mine",
+      "text": "Regional retailers facing big-box entry often respond by matching price, which my field work suggests is the wrong first move.",
+      "reviewed": true
+    },
+    {
+      "id": "P2",
+      "tag": "source",
+      "text": "Generic strategy theory holds that a firm must choose between lower cost and differentiation to sustain an advantage (Porter, 1985).",
+      "reviewed": true
+    },
+    {
+      "id": "P3",
+      "tag": "source",
+      "text": "Resources that are valuable, rare and hard to imitate explain why some firms sustain an advantage (Barney, 1991).",
+      "reviewed": true
+    },
+    {
+      "id": "P4",
+      "tag": "ai",
+      "text": "Recent work finds hybrid strategies outperform pure strategies for Gulf Coast retailers (Whitlow & Haines, 2022).",
+      "reviewed": false
+    },
+    {
+      "id": "P5",
+      "tag": "ai",
+      "text": "A service-led focus may let a regional firm escape the price war while keeping its customer relationships.",
+      "reviewed": false
+    }
+  ],
+  "roster": [
+    "Maya Thompson",
+    "Luis Ortega",
+    "Priya Nair"
+  ]
+}

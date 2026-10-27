@@ -1,0 +1,71 @@
+
+1. The studio loads on the invented chapter
+  PASS 5 of 5 objectives covered, 1 by your vignette
+  PASS 22 student slides + 1 instructor-only; 1 needs your material; 3 AI drafts
+  PASS 0 of 23 approved, 75 minutes planned
+  PASS 23 slide cards in the instructor view, with notes
+  PASS final files are locked until you approve
+
+2. Your format changes the draft
+  PASS a 3-bullet limit cuts "Cost Leadership" to 3 bullets
+  PASS and the new version lists what changed
+  PASS 12 bullets is refused with a reason and the deck is kept
+  PASS a 50-minute class re-plans the time to exactly 50
+
+3. Coverage: your corrections win
+  PASS removing slide 4 from LO6.1 drops "Customers: Who, What and How"
+  PASS adding slide 9 to LO6.2 brings in "Focus Strategies"
+  PASS "use proposal" puts both back
+
+4. A gap asks for your material instead of inventing it
+  PASS two words are refused with a reason
+  PASS your example clears the gap
+
+5. Approval, edits after approval, and final files
+  PASS approving all opens the final files: 23/23
+  PASS the final student deck downloads as a real .pptx with 22 slides and no notes
+  PASS the final instructor deck has all 23 slides and their notes
+  PASS editing an approved slide sends it back: "Changed since approval"
+  PASS and locks the final files again
+  PASS approving the edit reopens them
+  PASS the instructor guide downloads as a real .docx
+  PASS student view hides the answer key and every note
+
+6. Loading a real .pptx (written by python-pptx, compressed like PowerPoint)
+  PASS it is read in the browser and the coverage changes to 4/5
+  PASS LO6.1 now asks for your material
+  PASS a file that is not a .pptx is refused with a reason
+  PASS "Back to sample" restores 5/5
+
+7. Vignette and teaching note
+  PASS the tab switches views: only the vignette pane shows
+  PASS both documents start consistent with the master record
+  PASS typing the real company name is blocked, and final is locked
+  PASS changing 27% to 25% is caught as contradicting F4
+  PASS the epilogue figure in the student copy is blocked
+  PASS rebuilding from the record clears it
+  PASS a new disguise flows into both documents
+  PASS using a real name as the disguise is refused
+  PASS the final student case downloads as .docx
+
+8. Research sources
+  PASS 3 open items: a fabricated citation and two unreviewed AI paragraphs
+  PASS ticking "reviewed" does not clear a fabricated citation
+  PASS replace it with a verified source and review both: final opens
+  PASS citing a paper that is not in your library is blocked
+
+9. Privacy and running cost
+  PASS only the privacy pane shows
+  PASS names, the student ID, email and phone are removed: 5 items
+  PASS student information is Restricted
+  PASS sample volume on Claude Opus 5.5 costs $17.18 a month
+  PASS 10 decks a month raises it
+  PASS Claude Haiku 5.5 brings model use close to zero (server cost remains)
+  PASS a negative volume is refused with a reason
+
+10. Reset, screenshots, phone layout
+  PASS reset brings back the starting chapter
+  PASS no sideways scrolling at 390px wide
+  PASS zero console or page errors
+
+49 browser checks: 49 passed, 0 failed

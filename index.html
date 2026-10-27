@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faculty Course Studio · live demo</title>
+<meta name="description" content="Live demo for a business-school faculty member: publisher slides, chapter objectives and your prior materials become an editable first-draft teaching deck with instructor-only notes, a disguised case with a consistent teaching note, and source-checked research notes. Every final export waits for your approval. Invented sample course, real working logic and real .pptx and .docx files.">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#070b12;--s1:#0d141f;--s2:#121b28;--s3:#192333;
+  --line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+  --text:#eef3fa;--muted:#a9b6c8;--faint:#718099;
+  --acc:#7fb2ff;--acc2:#b0d0ff;--accInk:#06142b;--accSoft:rgba(127,178,255,.12);--accLine:rgba(127,178,255,.42);
+  --gold:#e7b84a;--goldSoft:rgba(231,184,74,.12);
+  --r:20px;--r2:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --a-bg:#f4f6f9;--a-panel:#fff;--a-line:#e2e6ed;--a-line2:#cfd6e1;--a-text:#14213d;--a-muted:#5b6578;--a-side:#14213d;--a-sideText:#c5cfe0;
+  --a-acc:#1f5f8b;--a-accSoft:#e7f0f8;--maroon:#8c1d40;--maroonSoft:#fbe9ef;
+  --c-ok:#047857;--c-okBg:#e2f5ec;--c-warn:#9a6700;--c-warnBg:#fdf3d6;--c-bad:#b42318;--c-badBg:#fde8e6;--c-info:#1d4ed8;--c-infoBg:#e7eefc;--c-grey:#4b5563;--c-greyBg:#eef0f3;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.wrap{max-width:1360px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--acc2);outline-offset:2px;border-radius:6px}
+section[id]{scroll-margin-top:76px}
+.ribbon{background:linear-gradient(90deg,#0d1d36,#070b12 35%,#070b12 65%,#0d1d36);border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.ribbon .wrap{display:flex;gap:10px;align-items:center;justify-content:center;padding-top:9px;padding-bottom:9px;flex-wrap:wrap;text-align:center}
+.ribbon b{color:var(--text)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px var(--accSoft);display:inline-block}
+header.nav{position:sticky;top:0;z-index:40;background:rgba(7,11,18,.86);backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(140deg,#b0d0ff,#3f7fd6 60%,#1b3c74);display:grid;place-items:center;color:#06142b;font:800 15px var(--serif)}
+.wm{font-weight:760;letter-spacing:-.015em;font-size:17px;line-height:1}
+.wm small{display:block;font-size:10px;letter-spacing:.22em;color:var(--faint);font-weight:650;margin-top:5px}
+.links{display:flex;gap:22px;font-size:14.5px;color:var(--muted)}
+.links a{text-decoration:none}.links a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:10px 16px;font-weight:700;font-size:14.5px;border:1px solid var(--line2);background:var(--s2);text-decoration:none;white-space:nowrap}
+.btn.pri{background:linear-gradient(180deg,var(--acc2),var(--acc));color:var(--accInk);border-color:transparent}
+.btn.sm{padding:7px 11px;font-size:13px;border-radius:10px}
+.hero{position:relative;padding:38px 0 8px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:-30% -10% auto -10%;height:700px;background:radial-gradient(600px 340px at 12% 20%,rgba(127,178,255,.14),transparent 70%),radial-gradient(520px 320px at 92% 0%,rgba(231,184,74,.07),transparent 70%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:end}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:var(--accSoft);color:var(--acc2);font-size:13px;font-weight:650;border:1px solid var(--accLine)}
+h1{font:600 clamp(30px,4vw,50px)/1.07 var(--serif);letter-spacing:-.02em;margin:14px 0 12px}
+h1 .hl{background:linear-gradient(100deg,var(--acc2),var(--acc) 55%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:17px;color:var(--muted);max-width:690px;margin:0}
+.lede b{color:var(--text);font-weight:650}
+.benefits{display:grid;gap:10px}
+.ben{display:flex;gap:13px;align-items:flex-start;padding:13px 15px;border-radius:var(--r2);background:var(--s1);border:1px solid var(--line)}
+.ben i{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--accSoft);color:var(--acc);font-style:normal;font-size:15px;font-weight:800}
+.ben b{display:block;font-size:15px}
+.ben span{color:var(--muted);font-size:13.5px;line-height:1.45}
+.trybreak{margin:18px 0 0;font-size:14px;color:var(--muted)}
+.trybreak b{color:var(--acc2)}
+
+/* ---------- the app window (light, a faculty studio) ---------- */
+.app{margin:18px 0 0;border-radius:18px;overflow:hidden;border:1px solid var(--line2);box-shadow:0 50px 110px -50px rgba(0,0,0,.95),0 0 0 6px #0b1220;background:var(--a-bg);color:var(--a-text);color-scheme:light}
+.abar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#e9edf3;border-bottom:1px solid var(--a-line2);flex-wrap:wrap}
+.lights{display:flex;gap:6px}.lights i{width:11px;height:11px;border-radius:50%;background:#c9d0db}
+.atitle{font-weight:750;font-size:13.5px;color:#22304d}
+.atitle small{color:#7a8496;font-weight:600;margin-left:6px}
+.abar .sp{flex:1}
+.abtn{border:1px solid var(--a-line2);background:#fff;color:var(--a-text);border-radius:9px;padding:6px 11px;font-size:13px;font-weight:650;line-height:1.3}
+.abtn:hover{border-color:#aab4c4}
+.abtn.pri{background:var(--a-acc);border-color:var(--a-acc);color:#fff}
+.abtn.ok{background:var(--c-ok);border-color:var(--c-ok);color:#fff}
+.abtn.ghost{background:transparent}
+.abtn[disabled]{opacity:.45;cursor:not-allowed}
+.abody{display:grid;grid-template-columns:210px minmax(0,1fr)}
+.side{background:var(--a-side);color:var(--a-sideText);padding:14px 10px;display:flex;flex-direction:column;gap:3px}
+.side .co{color:#fff;font-weight:700;font-size:13.5px;padding:4px 8px 12px;line-height:1.3;font-family:var(--serif)}
+.side .co small{display:block;color:#8e9ab0;font-weight:550;font-size:11.5px;margin-top:3px;font-family:var(--sans)}
+.side button{all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;font-size:13.5px;font-weight:600}
+.side button:hover{background:rgba(255,255,255,.06);color:#fff}
+.side button[aria-selected="true"]{background:rgba(255,255,255,.11);color:#fff}
+.side button:focus-visible{outline:2px solid #b0d0ff}
+.side .cnt{font:650 11.5px var(--mono);background:rgba(255,255,255,.1);padding:1px 7px;border-radius:999px}
+.side .cnt.bad{background:#7f1d1d;color:#fecaca}
+.side .cnt.ok{background:#064e3b;color:#a7f3d0}
+.side .sep{height:1px;background:rgba(255,255,255,.08);margin:10px 4px}
+.side .note{font-size:11.5px;color:#8e9ab0;padding:4px 8px;line-height:1.45}
+.main{min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));background:#fff;border-bottom:1px solid var(--a-line)}
+.kpi{padding:11px 14px;border-right:1px solid var(--a-line)}
+.kpi:last-child{border-right:0}
+.kpi b{display:block;font:760 21px/1.15 var(--mono);letter-spacing:-.02em}
+.kpi span{display:block;font-size:11.5px;color:var(--a-muted);font-weight:600;margin-top:2px;line-height:1.3}
+.kpi.flash b{animation:flash 1s ease}
+@keyframes flash{0%{color:var(--a-acc)}100%{color:inherit}}
+.cols{display:grid;grid-template-columns:340px minmax(0,1fr);min-height:600px}
+.left{border-right:1px solid var(--a-line);background:#fafbfc;padding:14px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.right{padding:14px 16px;min-width:0}
+.card{background:#fff;border:1px solid var(--a-line);border-radius:12px;padding:12px}
+.card h3{margin:0 0 8px;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#5b6578}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.field{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--a-muted);font-weight:600}
+.field input,.field select,.field textarea,.ta{border:1px solid var(--a-line2);border-radius:8px;padding:6px 8px;background:#fff;color:var(--a-text);font-size:13.5px;min-width:0;width:100%}
+.ta{font:13px/1.5 var(--sans);resize:vertical}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.check{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--a-text);font-weight:600}
+.err{color:var(--c-bad);font-size:12.5px;font-weight:600;margin-top:6px}
+.err:empty{display:none}
+.hint{color:var(--a-muted);font-size:12px;margin-top:6px;line-height:1.45}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;line-height:1.5}
+.chip.ok{background:var(--c-okBg);color:var(--c-ok)}
+.chip.warn{background:var(--c-warnBg);color:var(--c-warn)}
+.chip.bad{background:var(--c-badBg);color:var(--c-bad)}
+.chip.info{background:var(--c-infoBg);color:var(--c-info)}
+.chip.grey{background:var(--c-greyBg);color:var(--c-grey)}
+.chip.mar{background:var(--maroonSoft);color:var(--maroon)}
+.chip button{all:unset;cursor:pointer;font-weight:800;padding:0 2px}
+.cov{display:flex;flex-direction:column;gap:8px}
+.lo{border:1px solid var(--a-line);border-radius:10px;padding:8px 9px;font-size:12.5px}
+.lo .t{font-weight:650;color:var(--a-text);line-height:1.35}
+.lo .t b{font-family:var(--mono);font-size:12px;color:var(--a-acc);margin-right:4px}
+.lo .row{margin-top:6px;gap:5px}
+.lo select{border:1px solid var(--a-line2);border-radius:7px;font-size:12px;padding:2px 4px;background:#fff}
+.vers{font-size:12px;color:var(--a-muted);display:flex;flex-direction:column;gap:5px;max-height:150px;overflow:auto}
+.vers div b{color:var(--a-text);font-family:var(--mono)}
+.tabh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 10px;flex-wrap:wrap}
+.tabh h2{margin:0;font:600 18px var(--serif);letter-spacing:-.005em}
+.tabh p{margin:0;color:var(--a-muted);font-size:13px}
+.seg{display:inline-flex;border:1px solid var(--a-line2);border-radius:9px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:5px 10px;font-size:12.5px;font-weight:650;color:var(--a-muted)}
+.seg button[aria-pressed="true"]{background:var(--a-text);color:#fff}
+.export{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:12px}
+.export .card{padding:10px 12px}
+.export .row{gap:6px}
+.blk{font-size:12px;color:var(--c-bad);margin-top:6px;line-height:1.45}
+.blk.ok{color:var(--c-ok);font-weight:700}
+.slides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sc{border:1px solid var(--a-line);border-radius:12px;background:#fff;padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.sc.appr{border-color:#9fd8bf;box-shadow:0 0 0 1px #c8ebdb inset}
+.sc.gap{border-color:#f3b4ad;background:#fffafa}
+.sc.io{border-color:#e6b3c4}
+.mini{aspect-ratio:16/9;border:1px solid #dfe3ea;border-radius:8px;background:linear-gradient(180deg,#fff,#fbfcfe);padding:12px 14px;overflow:hidden;position:relative}
+.mini h4{margin:0 0 6px;font:600 15px/1.2 var(--serif);color:#14213d}
+.mini ul{margin:0;padding-left:16px;font-size:11.5px;line-height:1.4;color:#2a3550}
+.mini li.l1{margin-left:12px;list-style:circle}
+.mini .src{position:absolute;left:14px;bottom:6px;right:14px;font-size:9px;color:#8a93a3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .tag{position:absolute;right:8px;top:8px;background:var(--maroon);color:#fff;font:800 9px var(--sans);padding:3px 7px;border-radius:6px;letter-spacing:.04em}
+.mini.title{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.mini.title h4{font-size:19px}
+.mini.title p{margin:0;font-size:11px;color:#6b7280}
+.meta{display:flex;gap:5px;flex-wrap:wrap;align-items:center;font-size:12px}
+.meta .mins{font:650 11.5px var(--mono);color:var(--a-muted);margin-left:auto}
+.acts{display:flex;gap:6px;flex-wrap:wrap}
+.notes{border-left:3px solid var(--maroon);background:#fdf8fa;border-radius:0 8px 8px 0;padding:6px 9px;font-size:11.5px;color:#4b3340;display:flex;flex-direction:column;gap:2px;max-height:150px;overflow:auto}
+.notes b{color:var(--maroon);font-size:10.5px;letter-spacing:.05em}
+.case{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.issues{display:flex;flex-direction:column;gap:5px;margin-top:8px;font-size:12.5px}
+.iss{padding:6px 8px;border-radius:8px;line-height:1.4}
+.iss.block{background:var(--c-badBg);color:#7a1b12}
+.iss.warn{background:var(--c-warnBg);color:#6b4a00}
+.iss.clean{background:var(--c-okBg);color:#065f46;font-weight:650}
+.facts{display:flex;flex-direction:column;gap:6px;font-size:12.5px}
+.fact{border:1px solid var(--a-line);border-radius:9px;padding:7px 8px}
+.fact .id{font:700 11.5px var(--mono);color:var(--a-acc);margin-right:5px}
+.fact small{display:block;color:var(--a-muted);margin-top:2px}
+.disg{display:grid;grid-template-columns:minmax(0,1fr) 14px minmax(0,1fr);gap:5px;align-items:center;font-size:12px}
+.disg input{border:1px solid var(--a-line2);border-radius:7px;padding:4px 6px;font-size:12.5px;min-width:0}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#6b7383;font-weight:700;padding:6px 7px;border-bottom:1px solid var(--a-line2);background:#f8f9fb}
+td{padding:7px;border-bottom:1px solid var(--a-line);vertical-align:top}
+.tablewrap{border:1px solid var(--a-line);border-radius:10px;background:#fff;overflow:auto}
+.para{border:1px solid var(--a-line);border-radius:10px;padding:8px;background:#fff;display:flex;flex-direction:column;gap:6px}
+.para .row select{border:1px solid var(--a-line2);border-radius:7px;font-size:12px;padding:3px 5px;background:#fff}
+.redact{font:12.5px/1.5 var(--mono);background:#f8f9fb;border:1px dashed var(--a-line2);border-radius:8px;padding:8px;white-space:pre-wrap;word-break:break-word}
+.costs td.n{text-align:right;font-family:var(--mono)}
+.costs tr.tot td{font-weight:800;border-top:2px solid var(--a-line2)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:#14213d;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:80;max-width:92vw}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.empty{color:var(--a-muted);font-size:13px;padding:12px}
+
+/* ---------- page sections ---------- */
+.sec{padding:64px 0 0}
+.sec h2.big{font:600 clamp(26px,3vw,38px)/1.12 var(--serif);letter-spacing:-.015em;margin:0 0 10px}
+.sec p.sub{color:var(--muted);max-width:780px;margin:0 0 26px;font-size:16.5px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.step{padding:18px;border-radius:var(--r2);background:var(--s1);border:1px solid var(--line)}
+.step .n{font:800 13px var(--mono);color:var(--acc)}
+.step b{display:block;margin:6px 0 4px;font-size:16px}
+.step span{color:var(--muted);font-size:14px}
+.step.you{border-color:var(--accLine);background:linear-gradient(180deg,rgba(127,178,255,.08),var(--s1))}
+.arch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:stretch}
+.box{padding:14px;border-radius:var(--r2);background:var(--s1);border:1px solid var(--line);font-size:13.5px;color:var(--muted);position:relative}
+.box b{display:block;color:var(--text);font-size:14.5px;margin-bottom:4px}
+.box .tier{display:inline-block;margin-top:8px;font:700 11px var(--mono);padding:2px 7px;border-radius:999px;background:var(--accSoft);color:var(--acc2)}
+.box.you{border-color:var(--accLine)}
+.why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.why div{padding:14px;border-radius:var(--r2);border:1px solid var(--line);background:var(--s1);font-size:14px;color:var(--muted)}
+.why b{color:var(--text);display:block;margin-bottom:3px}
+.hood{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+pre.tree{margin:0;padding:16px;border-radius:var(--r2);background:var(--s1);border:1px solid var(--line);font:13px/1.6 var(--mono);color:#cbd8ea;overflow:auto}
+.hood p{color:var(--muted);margin:0 0 12px}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.tierc{position:relative;display:flex;flex-direction:column;padding:22px;border-radius:var(--r);background:var(--s1);border:1px solid var(--line2)}
+.tierc.feat{border:1px solid rgba(231,184,74,.6);background:linear-gradient(180deg,rgba(231,184,74,.09),var(--s1) 40%);box-shadow:0 30px 80px -40px rgba(231,184,74,.35)}
+.badge{position:absolute;top:-12px;left:22px;background:var(--gold);color:#2a1d00;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;letter-spacing:.02em}
+.tierc h3{margin:0;font-size:18px}
+.price{font:800 34px/1.1 var(--mono);letter-spacing:-.03em;margin:10px 0 2px}
+.price s{font-size:16px;color:var(--faint);font-weight:600;margin-left:8px}
+.tierc .for{color:var(--muted);font-size:14px;margin:0 0 12px}
+.tierc ul{margin:0 0 14px;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;font-size:14px}
+.tierc li{display:flex;gap:8px}
+.tierc li:before{content:"✓";color:var(--acc);font-weight:900}
+.tierc.feat li:before{color:var(--gold)}
+.tierc li.bonus:before{content:"+";color:var(--gold)}
+.ms{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.ms b{color:var(--text)}
+.phases{margin-top:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.phases div{padding:14px;border-radius:var(--r2);border:1px solid var(--line);background:var(--s1);font-size:13.5px;color:var(--muted)}
+.phases b{display:block;color:var(--text)}
+.phases .p{display:block;font:800 18px var(--mono);color:var(--text);margin:4px 0}
+.cta{margin:56px 0 0;padding:30px;border-radius:24px;border:1px solid var(--accLine);background:radial-gradient(500px 220px at 15% 0%,rgba(127,178,255,.15),transparent 70%),var(--s1);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:26px;align-items:center}
+.cta h2{margin:0 0 8px;font:600 clamp(24px,2.6vw,32px)/1.15 var(--serif)}
+.cta p{margin:0;color:var(--muted)}
+.cta .urg{margin-top:10px;font-size:14px;color:var(--acc2)}
+.need{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.need li{padding:10px 12px;border-radius:12px;background:var(--s2);border:1px solid var(--line);font-size:14px}
+.need li b{color:var(--acc2);font-family:var(--mono);margin-right:6px}
+.scope{margin:56px 0 0;padding:22px;border-radius:var(--r2);border:1px solid var(--line);background:var(--s1);color:var(--muted);font-size:14px}
+.scope h3{margin:0 0 8px;color:var(--text);font-size:15px}
+.scope ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+footer{padding:36px 0 50px;color:var(--faint);font-size:13.5px;text-align:center}
+@media (max-width:1180px){
+  .hero .wrap{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .kpi:nth-child(3){border-right:0}
+  .kpi:nth-child(-n+3){border-bottom:1px solid var(--a-line)}
+  .cols{grid-template-columns:1fr}
+  .left{border-right:0;border-bottom:1px solid var(--a-line)}
+  .steps,.arch,.phases{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tiers,.why{grid-template-columns:1fr}
+  .cta,.hood{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .wrap{padding:0 16px}
+  .links{display:none}
+  .abody{grid-template-columns:1fr}
+  .side{flex-direction:row;flex-wrap:wrap;gap:4px;padding:8px}
+  .side .co,.side .sep,.side .note{display:none}
+  .side button{padding:6px 9px;font-size:12.5px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi{border-right:1px solid var(--a-line)!important;border-bottom:1px solid var(--a-line)}
+  .kpi:nth-child(2n){border-right:0!important}
+  .slides,.case,.export{grid-template-columns:1fr}
+  .steps,.arch,.phases{grid-template-columns:1fr}
+  .abar .atitle small{display:none}
+  .nav .wrap{height:56px}
+  .wm{font-size:15px}
+  .wm small{display:none}
+  .nav .btn.sm{padding:6px 10px;font-size:12.5px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="ribbon"><div class="wrap"><span class="dot"></span><span><b>Live tool with an invented course.</b> Built from your job post: publisher deck + chapter objectives + your prior materials, to an editable deck with instructor-only notes, with your approval before anything is final.</span></div></div>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="#top"><span class="logo">F</span><span class="wm">Faculty Course Studio<small>TEACHING · CASES · RESEARCH</small></span></a>
+  <nav class="links"><a href="#tool">Try it</a><a href="#how">How it works</a><a href="#architecture">Architecture</a><a href="#pricing">Pricing</a><a href="#start">Start</a></nav>
+  <a class="btn pri sm" href="#start">Run it on my chapter</a>
+</div></header>
+
+<main id="top">
+<section class="hero"><div class="wrap">
+  <div>
+    <span class="eyebrow">Teaching decks, case vignettes and research, in your voice</span>
+    <h1>From publisher slides to <span class="hl">your first-draft deck, in your format</span>, with you approving every slide.</h1>
+    <p class="lede">This is a <b>live tool, not a video</b>. It reads a publisher deck and your chapter objectives, builds a draft deck in your established sequence with <b>instructor-only content kept in the notes</b>, keeps a disguised case and its teaching note on <b>one master record of facts</b>, and blocks any citation it cannot verify. Downloads are real, editable PowerPoint and Word files.</p>
+  </div>
+  <div class="benefits">
+    <div class="ben"><i>1</i><div><b>Your format and your examples</b><span>Your sequence, bullet limits, prompts and examples come first. Where none fit, it asks for yours instead of inventing one.</span></div></div>
+    <div class="ben"><i>2</i><div><b>Nothing final without you</b><span>Every slide waits for your approval. Edit one after approving and it goes back for review.</span></div></div>
+    <div class="ben"><i>3</i><div><b>Every line has a source</b><span>Publisher slide, your material, or AI draft, on each slide and in every file. Unverified citations cannot reach a final document.</span></div></div>
+  </div>
+</div></section>
+
+<section id="tool"><div class="wrap">
+  <p class="trybreak">Try to break it: <b>set the bullet limit to 3</b>, <b>type "Bayshore" into the student case</b>, <b>change 27% to 25%</b>, or <b>tick "reviewed" on the paragraph that cites an AI-suggested paper</b>. Or load your own .pptx; it is read in your browser and never uploaded.</p>
+  <div class="app" id="app">
+    <div class="abar">
+      <div class="lights"><i></i><i></i><i></i></div>
+      <div class="atitle">Faculty Course Studio <small id="courseName">MAN 4720 (invented section) · Chapter 6</small></div>
+      <div class="sp"></div>
+      <button class="abtn" id="resetBtn" type="button">Reset demo</button>
+    </div>
+    <div class="abody">
+      <nav class="side" role="tablist" aria-label="Studio views">
+        <div class="co">Business-Level Strategy<small>Spring 2027 · invented sample</small></div>
+        <button role="tab" aria-selected="true" data-tab="deck">Teaching deck <span class="cnt" id="cntDeck">0</span></button>
+        <button role="tab" aria-selected="false" data-tab="case">Vignette and note <span class="cnt" id="cntCase">0</span></button>
+        <button role="tab" aria-selected="false" data-tab="research">Research sources <span class="cnt" id="cntRes">0</span></button>
+        <button role="tab" aria-selected="false" data-tab="privacy">Privacy and costs</button>
+        <div class="sep"></div>
+        <div class="note">Every number here is computed from the inputs on screen. In this demo, stored drafts stand in for the model; in your build, Claude drafts them and the same checks run on every draft.</div>
+      </nav>
+      <div class="main">
+        <div class="kpis" id="kpis">
+          <div class="kpi" data-k="covered"><b>–</b><span>Objectives covered</span></div>
+          <div class="kpi" data-k="slides"><b>–</b><span>Student slides + instructor-only</span></div>
+          <div class="kpi" data-k="gaps"><b>–</b><span>Need your material</span></div>
+          <div class="kpi" data-k="ai"><b>–</b><span>AI drafts to review</span></div>
+          <div class="kpi" data-k="approved"><b>–</b><span>Slides approved</span></div>
+          <div class="kpi" data-k="minutes"><b>–</b><span>Class minutes planned</span></div>
+        </div>
+
+        <!-- deck -->
+        <div class="cols" data-pane="deck">
+          <aside class="left">
+            <div class="card">
+              <h3>Sources</h3>
+              <div class="hint" id="srcLabel" style="margin-top:0"></div>
+              <div class="row" style="margin-top:8px">
+                <label class="abtn" for="pptxIn" style="cursor:pointer">Load a .pptx</label>
+                <input type="file" id="pptxIn" accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation" hidden>
+                <button class="abtn" id="sampleDeckBtn" type="button">Get the sample deck</button>
+                <button class="abtn ghost" id="backSample" type="button" hidden>Back to sample</button>
+              </div>
+              <div class="err" id="srcErr" role="alert"></div>
+              <label class="field" style="margin-top:10px">Chapter objectives (one per line, "LO6.1: text")<textarea class="ta" id="objIn" rows="6"></textarea></label>
+              <div class="err" id="objErr" role="alert"></div>
+            </div>
+            <div class="card">
+              <h3>Your format</h3>
+              <div class="grid2">
+                <label class="field">Bullets per slide<input type="number" id="fBul" min="2" max="8" step="1"></label>
+                <label class="field">Words per bullet<input type="number" id="fWords" min="6" max="30" step="1"></label>
+                <label class="field">Class minutes<input type="number" id="fMin" min="30" max="180" step="5"></label>
+                <label class="field">Slides per objective<input type="number" id="fPer" min="1" max="4" step="1"></label>
+              </div>
+              <label class="field" style="margin-top:8px">Match strictness <span class="mono" id="fThrV"></span><input type="range" id="fThr" min="0.05" max="0.3" step="0.01"></label>
+              <label class="check" style="margin-top:6px"><input type="checkbox" id="fExp"> Draft an explainer when a concept is never explained</label>
+              <div class="err" id="fmtErr" role="alert"></div>
+            </div>
+            <div class="card">
+              <h3>Coverage <span class="mono" id="covSum"></span></h3>
+              <div class="cov" id="cov"></div>
+              <div class="hint" id="unused"></div>
+            </div>
+            <div class="card">
+              <h3>Versions</h3>
+              <div class="vers" id="vers"></div>
+            </div>
+          </aside>
+          <div class="right">
+            <div class="export">
+              <div class="card">
+                <h3>Draft files (always available)</h3>
+                <div class="row">
+                  <button class="abtn" type="button" data-dl="student" data-final="0">Student deck .pptx</button>
+                  <button class="abtn" type="button" data-dl="instructor" data-final="0">Instructor deck .pptx</button>
+                  <button class="abtn" type="button" data-dl="guide" data-final="0">Instructor guide .docx</button>
+                </div>
+              </div>
+              <div class="card">
+                <h3>Final files (after your approval)</h3>
+                <div class="row">
+                  <button class="abtn pri" type="button" data-dl="student" data-final="1">Student deck</button>
+                  <button class="abtn pri" type="button" data-dl="instructor" data-final="1">Instructor deck</button>
+                  <button class="abtn pri" type="button" data-dl="guide" data-final="1">Guide</button>
+                </div>
+                <div class="blk" id="gateMsg"></div>
+              </div>
+            </div>
+            <div class="tabh">
+              <h2>Draft deck <span class="mono" style="font-size:13px;color:#5b6578" id="deckSum"></span></h2>
+              <div class="row">
+                <div class="seg" role="group" aria-label="Deck view"><button type="button" data-view="student" aria-pressed="false">Student view</button><button type="button" data-view="instructor" aria-pressed="true">Instructor view</button></div>
+                <button class="abtn ok" id="approveAll" type="button">Approve all I have reviewed</button>
+              </div>
+            </div>
+            <div class="slides" id="slides"></div>
+          </div>
+        </div>
+
+        <!-- vignette -->
+        <div class="cols" data-pane="case" hidden>
+          <aside class="left">
+            <div class="card">
+              <h3>Master record (your notes)</h3>
+              <div class="facts" id="facts"></div>
+            </div>
+            <div class="card">
+              <h3>Disguise</h3>
+              <div class="hint" style="margin-top:0">Real names stay in your master record only. Change a disguise and both documents follow.</div>
+              <div id="disg" style="display:flex;flex-direction:column;gap:6px;margin-top:8px"></div>
+              <div class="err" id="disgErr" role="alert"></div>
+            </div>
+          </aside>
+          <div class="right">
+            <div class="tabh"><h2>Student vignette and teaching note</h2>
+              <div class="row"><button class="abtn" id="regen" type="button">Rebuild both from the record</button></div>
+            </div>
+            <div class="case">
+              <div class="card">
+                <h3>Student version (editable)</h3>
+                <textarea class="ta" id="stuTa" rows="18" aria-label="Student vignette"></textarea>
+                <div class="issues" id="stuIss"></div>
+              </div>
+              <div class="card">
+                <h3>Teaching note (instructor only)</h3>
+                <textarea class="ta" id="teaTa" rows="18" aria-label="Teaching note"></textarea>
+                <div class="issues" id="teaIss"></div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:12px">
+              <div class="row">
+                <button class="abtn" type="button" id="caseDraft">Download both as drafts (.docx)</button>
+                <button class="abtn pri" type="button" id="caseFinal">Download final (.docx)</button>
+                <span class="blk" id="caseGate" style="margin:0"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- research -->
+        <div class="cols" data-pane="research" hidden>
+          <aside class="left">
+            <div class="card">
+              <h3>Your library</h3>
+              <div class="facts" id="lib"></div>
+            </div>
+          </aside>
+          <div class="right">
+            <div class="tabh"><h2>Research memo with provenance</h2><p>Mark each paragraph: your idea, a verified source, public evidence, or AI draft language.</p></div>
+            <div id="memo" style="display:flex;flex-direction:column;gap:8px"></div>
+            <div class="row" style="margin-top:8px"><button class="abtn" id="addPara" type="button">Add a paragraph</button></div>
+            <div class="tabh" style="margin-top:14px"><h2>Source matrix</h2><span class="blk" id="memoGate" style="margin:0"></span></div>
+            <div class="tablewrap"><table><thead><tr><th>Para</th><th>Provenance</th><th>Sources</th><th>Open items</th></tr></thead><tbody id="matrix"></tbody></table></div>
+            <div class="row" style="margin-top:10px">
+              <button class="abtn" id="memoDraft" type="button">Download draft memo (.docx)</button>
+              <button class="abtn pri" id="memoFinal" type="button">Download final memo (.docx)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- privacy and costs -->
+        <div class="cols" data-pane="privacy" hidden>
+          <aside class="left">
+            <div class="card">
+              <h3>Where each kind of material may go</h3>
+              <div class="facts" id="tiers"></div>
+            </div>
+          </aside>
+          <div class="right">
+            <div class="card">
+              <h3>Redaction before any model call</h3>
+              <textarea class="ta" id="redIn" rows="4" aria-label="Text to redact">Maya Thompson (U12345678, maya.t@example.edu, 813-555-0142) asked whether the Pelican Point case will be on the midterm. Luis Ortega said the same.</textarea>
+              <div class="hint">What the model would receive (<span id="redCount">0</span> items removed):</div>
+              <div class="redact" id="redOut"></div>
+            </div>
+            <div class="card" style="margin-top:12px">
+              <h3>Monthly running cost (estimate)</h3>
+              <div class="grid2">
+                <label class="field">Decks a month<input type="number" id="cDecks" min="0" max="60" value="4"></label>
+                <label class="field">Pages per deck (sources)<input type="number" id="cPages" min="0" max="400" value="60"></label>
+                <label class="field">Vignettes a month<input type="number" id="cCases" min="0" max="40" value="2"></label>
+                <label class="field">Research memos a month<input type="number" id="cMemos" min="0" max="60" value="4"></label>
+                <label class="field">Model<select id="cModel"></select></label>
+                <label class="field">Private server ($/month)<input type="number" id="cHost" min="0" max="500" value="14"></label>
+              </div>
+              <div class="err" id="costErr" role="alert"></div>
+              <div class="tablewrap" style="margin-top:10px"><table class="costs"><thead><tr><th>Item</th><th>Volume</th><th style="text-align:right">$/month</th></tr></thead><tbody id="costBody"></tbody></table></div>
+              <div class="hint">Model prices are Anthropic list prices per million tokens (Claude Opus 5.5 $4 in, $20 out; Sonnet 5.5 $2, $10; Haiku 5.5 $0.10, $0.50). Token counts are estimates: about 700 per source page. The server figure is an estimate you can change.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="how"><div class="wrap">
+  <h2 class="big">How it works</h2>
+  <p class="sub">Four steps. One is yours, and nothing reaches "final" without it.</p>
+  <div class="steps">
+    <div class="step"><span class="n">01</span><b>Ingest</b><span>Publisher PowerPoints, syllabi, readings, your decks and notes go into a private knowledge base, split by slide and section, each piece tagged with where it came from.</span></div>
+    <div class="step"><span class="n">02</span><b>Match and draft</b><span>Each objective is matched to the slides that cover it. Gaps are named, not filled with invented material. Drafts follow your sequence and your examples.</span></div>
+    <div class="step"><span class="n">03</span><b>Check</b><span>Bullet limits, unexplained concepts, disguise leaks, facts that contradict the record, and citations no database has, all caught before you read the draft.</span></div>
+    <div class="step you"><span class="n">04 · you</span><b>Approve and export</b><span>You approve slide by slide. Final PowerPoint and Word files open only when everything is approved, and each carries its source record.</span></div>
+  </div>
+</div></section>
+
+<section class="sec" id="architecture"><div class="wrap">
+  <h2 class="big">The private architecture I would build for you</h2>
+  <p class="sub">Open formats and swappable parts, so you are not locked in. Every account is in your name, and the documentation covers every credential, workflow and maintenance step.</p>
+  <div class="arch">
+    <div class="box you"><b>Your files</b>Publisher decks, your decks, syllabi, readings, notes, in OneDrive, Google Drive or a private folder you choose.<span class="tier">stays yours</span></div>
+    <div class="box"><b>Ingestion and index</b>PowerPoint, Word, PDF and spreadsheet parsing; chunking by slide and section; metadata (course, chapter, source, sensitivity); embeddings in Postgres with pgvector.<span class="tier">your server</span></div>
+    <div class="box"><b>Workflows</b>n8n (self-hosted) runs each workflow: deck, vignette, guide, research. Prompts and templates are versioned files, editable without rebuilding.<span class="tier">your server</span></div>
+    <div class="box"><b>Model</b>Claude through the API under business terms (not used for training). Restricted material is redacted first or handled by a local model.<span class="tier">by tier</span></div>
+    <div class="box"><b>Review studio</b>This app, on your data: approve, edit, fill gaps, compare versions. Your approval is recorded against the exact content approved.<span class="tier">you decide</span></div>
+    <div class="box"><b>Editable outputs</b>PowerPoint with instructor-only notes, Word guides and cases, source matrices. No locked PDFs, no chat-only answers.<span class="tier">.pptx · .docx</span></div>
+    <div class="box"><b>Audit and versions</b>Every draft, edit and approval is logged with its sources, so any slide or paragraph can be traced back.<span class="tier">traceable</span></div>
+    <div class="box"><b>Handover</b>Administrator guide, workflow diagrams, prompt and template library, data-handling guide and a recorded training session.<span class="tier">documented</span></div>
+  </div>
+  <div class="why">
+    <div><b>Why Claude for drafting</b>Long context for whole chapters, strong at following a house style, and structured output the checks can verify. It can be swapped later because the checks, not the model, decide what passes.</div>
+    <div><b>Why n8n and Postgres</b>Both run on a small server you own; both are widely known, so another developer can maintain them. No proprietary database holds your research.</div>
+    <div><b>Why a review studio</b>Chat is the wrong place for faculty judgment. A studio shows what changed, where it came from, and what still needs you, then exports editable files.</div>
+  </div>
+</div></section>
+
+<section class="sec" id="hood"><div class="wrap">
+  <h2 class="big">Under the hood</h2>
+  <div class="hood">
+    <pre class="tree">faculty-ai-workflow-1027/
+├─ index.html            the studio you just used
+├─ src/facultyEngine.js  matching, deck, cases, citations, costs
+├─ src/ooxml.js          writes .pptx and .docx, reads .pptx
+├─ src/ooxml-parts.js    16:9 theme and master (python-pptx MIT template)
+├─ data/course.json      invented sample course
+└─ tests/
+   ├─ verify.js          <span id="nodeCount">91</span> engine checks
+   ├─ ooxml-check.py     18 checks with python-pptx and python-docx
+   └─ browser-check.py   clicks through this page</pre>
+    <div>
+      <p>The page and the tests load the same engine file, so what the tests prove is what you just used. The exported files are also opened by python-pptx and python-docx, independent readers that know nothing about this code, and checked slide by slide.</p>
+      <p>Hand <span class="mono">src/</span> and <span class="mono">tests/</span> to your university's developer, or never open them.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="pricing"><div class="wrap">
+  <h2 class="big">Fixed prices, in phases you can stop after</h2>
+  <p class="sub">Phase 1 stands on its own: you keep the requirements document, the architecture and the prototype whether or not we continue.</p>
+  <div class="tiers">
+    <div class="tierc">
+      <h3>Phase 1: Discovery and architecture</h3>
+      <div class="price">$1,500</div>
+      <p class="for">About 1.5 weeks. For deciding with evidence.</p>
+      <ul>
+        <li>Review of your representative materials</li>
+        <li>Current and future workflow maps</li>
+        <li>Architecture, privacy and cost recommendation</li>
+        <li>Written requirements document</li>
+        <li>This studio running on your sanitized sample</li>
+      </ul>
+      <div class="ms"><span><b>Done when:</b> you approve the requirements and architecture.</span></div>
+    </div>
+    <div class="tierc feat">
+      <span class="badge">BEST VALUE</span>
+      <h3>Phases 1 + 2: Working deck workflow</h3>
+      <div class="price">$3,700<s>worth $7,400+</s></div>
+      <p class="for">About 4 weeks. Your first workflow, end to end, on your templates.</p>
+      <ul>
+        <li>Everything in Phase 1</li>
+        <li>Publisher PPT + objectives + your decks, to a draft deck with instructor notes</li>
+        <li>Editable PowerPoint and Word exports</li>
+        <li>Review and approval stage with a source record</li>
+        <li>Knowledge-base structure and document taxonomy</li>
+        <li>Technical documentation and roadmap</li>
+        <li class="bonus">Walkthrough video of every screen</li>
+        <li class="bonus">Your first chapter loaded in for you</li>
+        <li class="bonus">30 days of fixes after handover</li>
+      </ul>
+      <div class="ms">
+        <span><b>M1 $1,500:</b> Phase 1 approved.</span>
+        <span><b>M2 $1,400:</b> your chapter produces a deck and guide you can open and edit.</span>
+        <span><b>M3 $800:</b> you run a second chapter yourself from the documentation.</span>
+      </div>
+    </div>
+    <div class="tierc">
+      <h3>Phases 1 to 4: The full faculty system</h3>
+      <div class="price">$9,400</div>
+      <p class="for">About 9 weeks. All four functions in your job post.</p>
+      <ul>
+        <li>Everything in Phases 1 and 2</li>
+        <li>Vignettes and teaching notes on one master record, with disguise checks</li>
+        <li>Instructor-guide automation</li>
+        <li>Research workspace with provenance and citation checks</li>
+        <li>Reusable knowledge base across courses</li>
+        <li>Administrator guide, training session, maintenance proposal</li>
+      </ul>
+      <div class="ms"><span><b>Paid per phase,</b> each with its own done-when test.</span></div>
+    </div>
+  </div>
+  <div class="phases">
+    <div><b>Phase 2 alone</b><span class="p">$2,200</span>Minimum viable system: the deck workflow (included in the $3,700).</div>
+    <div><b>Phase 3</b><span class="p">$4,800</span>Vignettes, instructor guides, research support, knowledge base.</div>
+    <div><b>Phase 4</b><span class="p">$900</span>Documentation, diagrams, prompt library, training, handover.</div>
+    <div><b>Monthly running cost</b><span class="p" id="monthly">about $17</span>Model use plus a small private server at the sample volume, billed to your accounts. Optional maintenance $350 a month.</div>
+  </div>
+</div></section>
+
+<section class="sec" id="start"><div class="wrap">
+  <div class="cta">
+    <div>
+      <h2>Send one sanitized chapter. See your own first draft before we talk.</h2>
+      <p>The publisher deck, the chapter objectives and one of your decks are enough. I will load them into this studio so you see your format, your examples and the gaps it finds on your own material.</p>
+      <p class="urg">I can start Phase 1 this week.</p>
+    </div>
+    <ul class="need">
+      <li><b>01</b>One chapter's publisher slides and objectives (sanitized is fine)</li>
+      <li><b>02</b>Two of your own decks you consider "in your format"</li>
+      <li><b>03</b>One vignette with its teaching note, or your notes for one</li>
+      <li><b>04</b>Where your files live today, and any university IT rules</li>
+    </ul>
+  </div>
+  <div class="scope">
+    <h3>Honest scope</h3>
+    <ul>
+      <li>Built from your job post. The course section, publisher deck, examples, case, people and companies are invented. The Porter (1980, 1985) and Barney (1991) references are real published works; "Whitlow &amp; Haines 2022" is a planted fake, there to show the citation block.</li>
+      <li>No real faculty, student or company data is shown. In this demo, stored drafts stand in for the model, so the page needs no key and sends nothing anywhere. A .pptx you load is read in your browser and never uploaded.</li>
+      <li>The engine, the file writer and the passing tests are real: <span id="countLine">91 engine checks, 18 independent file checks and 49 browser checks</span>.</li>
+      <li>The delivered system runs in your own accounts, with access you grant during the build. No prior client build of this kind is claimed.</li>
+      <li>This link will be taken down about 30 days after it was sent.</li>
+    </ul>
+  </div>
+</div></section>
+</main>
+<footer>Built by Taiwo, Pathfinder Automation Solutions</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="src/ooxml-parts.js"></script>
+<script src="src/ooxml.js"></script>
+<script src="src/facultyEngine.js"></script>
+<script>
+(function () {
+  'use strict';
+  var FALLBACK = {"_note":"Invented sample data for a live demo. The course section, publisher deck, examples, vignette, people and companies are invented. The three Porter and Barney entries in the library are real, widely cited works; one library entry is a planted fake that the checker must block.","meta":{"course":"MAN 4720 Strategic Management (invented section)","term":"Spring 2027","author":"Faculty member (you)","publisher":"Strategy in Practice, 4th ed. (invented publisher sample)","chapter":"Chapter 6: Business-Level Strategy","deckTitle":"Business-Level Strategy","region":"Tampa Bay, Florida"},"objectives":[{"id":"LO6.1","text":"Define business-level strategy and explain how customers (who, what needs, how) shape it"},{"id":"LO6.2","text":"Describe the five generic business-level strategies"},{"id":"LO6.3","text":"Explain how cost leadership and differentiation create value through value chain activities"},{"id":"LO6.4","text":"Evaluate the risks of each strategy, including being stuck in the middle"},{"id":"LO6.5","text":"Apply business-level strategy to a regional firm's growth decision"}],"publisherSlides":[{"n":1,"title":"Chapter 6: Business-Level Strategy","bullets":[],"notes":""},{"n":2,"title":"Learning Objectives","bullets":["Define business-level strategy","Describe the generic strategies","Explain value creation","Evaluate strategy risks"],"notes":""},{"n":3,"title":"What Is Business-Level Strategy?","bullets":["An integrated and coordinated set of commitments and actions","Used to gain a competitive advantage by exploiting core competencies in specific product markets","Answers how the firm will compete, not where it will compete","Every firm needs one for each business it runs"],"notes":"Contrast with corporate-level strategy, which answers where the firm competes."},{"n":4,"title":"Customers: Who, What and How","bullets":["Who: which customer groups will we serve","What: which customer needs will we satisfy","How: which core competencies will we use to satisfy those needs","Customer groups can be segmented by demographics, geography, lifestyle and purchase behavior"],"notes":"Ask students to segment a familiar market before showing the list."},{"n":5,"title":"Five Generic Strategies","bullets":["Cost leadership","Differentiation","Focused cost leadership","Focused differentiation","Integrated cost leadership and differentiation","The choice depends on competitive scope (broad or narrow) and the source of advantage (cost or uniqueness)"],"notes":"Draw the 2x2 on the board: scope against source of advantage."},{"n":6,"title":"Cost Leadership","bullets":["Produce goods or services at the lowest cost relative to rivals","Standardized products for the typical customer in the industry","Relentless efficiency through scale, tight cost control and simple designs","Must still offer acceptable quality and features","Value chain activities: efficient logistics, lean operations and low overhead","Price can match rivals while margins stay higher"],"notes":"Stress that low cost is not the same as low price."},{"n":7,"title":"Cost Leadership and the Five Forces","bullets":["Rivals hesitate to compete on price","Powerful buyers can only push prices down to the next most efficient rival","Low costs absorb supplier price increases","Scale deters new entrants","Lower costs protect against substitutes"],"notes":""},{"n":8,"title":"Differentiation","bullets":["Produce goods or services customers perceive as different in ways that matter to them","Customers pay a premium price for unique features","Sources include quality, brand image, service, technology and design","Value chain activities: research and development, marketing and superior service"],"notes":"The difference must be one customers value enough to pay for."},{"n":9,"title":"Focus Strategies","bullets":["Serve a narrow segment: a buyer group, a product line or a geographic market","Focused cost leadership: lowest cost within the niche","Focused differentiation: unique value for the niche","Works when broad competitors underserve the niche"],"notes":""},{"n":10,"title":"Integrated Cost Leadership and Differentiation","bullets":["Low cost and some differentiation at the same time","Enabled by flexible manufacturing, information networks and total quality management","Stuck in the middle: neither the lowest cost nor meaningfully different","Requires real capability in both, not a compromise"],"notes":""},{"n":11,"title":"Risks of Each Strategy","bullets":["Cost leadership: technology shifts can erase the cost advantage, and rivals imitate","Differentiation: the price premium grows too large, or customers stop valuing the difference","Focus: broad rivals target the niche, or niche needs converge with the broad market","Integrated: the firm can become stuck in the middle"],"notes":""},{"n":12,"title":"Chapter Summary","bullets":["Business-level strategy is about how to compete","Customers define who, what and how","Five generic strategies","Each strategy carries specific risks"],"notes":""}],"concepts":[{"term":"business-level strategy"},{"term":"competitive advantage"},{"term":"core competencies"},{"term":"cost leadership"},{"term":"differentiation"},{"term":"focused cost leadership"},{"term":"focused differentiation"},{"term":"stuck in the middle"},{"term":"value chain","draftDefinition":["The linked activities a firm performs to design, make, sell and support what it offers","Each activity can lower cost or add something customers value","Cost leaders run them leaner; differentiators invest where customers notice"],"explainerTitle":"What is the value chain?"},{"term":"five forces"}],"prior":{"openers":[{"text":"You have $50,000 to open a coffee shop on Bayshore Boulevard. Do you charge $2 or $6 for a latte? Decide before the next slide.","concepts":["cost leadership","differentiation"],"source":"Your Fall 2025 deck, slide 2"}],"examples":[{"id":"EX1","title":"Gulf Coast Fuel & Go (invented)","text":"Regional convenience chain that wins on price per gallon with no-frills stores and bulk fuel contracts","concepts":["cost leadership","value chain"],"source":"Your Fall 2025 deck, slide 14"},{"id":"EX2","title":"Harbor Line Coffee Roasters (invented)","text":"Small-batch roaster with $6 lattes, origin stories and a waitlist for rare beans","concepts":["differentiation","focused differentiation"],"source":"Your Fall 2025 deck, slide 17"},{"id":"EX3","title":"Sunfield Citrus Co-op (invented)","text":"Sells bulk juice concentrate to private-label grocery brands at the lowest delivered cost","concepts":["focused cost leadership"],"source":"Your teaching notes, Week 6"},{"id":"EX4","title":"Causeway Outfitters (invented)","text":"Tried to match big-box prices and run a premium fishing guide service at once; lost on both","concepts":["stuck in the middle"],"source":"Your teaching notes, Week 7"}],"prompts":[{"concepts":["business-level strategy"],"text":"Pick a business you paid this week. Who is its customer, what need does it meet, and how does it meet it?","source":"Your Fall 2025 deck, slide 6"},{"concepts":["stuck in the middle"],"text":"Name a company that tried to be everything to everyone. What happened, and when could you see it coming?","source":"Your Fall 2025 deck, slide 22"}],"anticipated":[{"concepts":["cost leadership"],"responses":["Cheap means low quality","Only big companies can do it"],"misconception":"Cost leadership means the lowest cost, not the lowest price; the price can match rivals.","probe":"If your costs are the lowest, why might you still not charge the lowest price?"},{"concepts":["differentiation"],"responses":["Branding is the same as differentiation"],"misconception":"Differentiation is not just marketing; it must be a difference customers will pay for.","probe":"Would you still pay more if the logo were removed?"},{"concepts":["stuck in the middle"],"responses":["Doing both is always better"],"misconception":"An integrated strategy is not a safe middle; without real capability in both it gets stuck.","probe":"What capability would a firm need to do both at once?"},{"concepts":["business-level strategy"],"responses":["Strategy is the same as the mission statement"],"misconception":"Business-level strategy is about how to compete in one market, not the company's purpose.","probe":"Which decision this year would change if the strategy changed?"}],"activity":{"title":"Strategy map","student":["In pairs, place six Tampa Bay businesses on the map: broad or narrow scope, cost or uniqueness","Be ready to defend one placement in 30 seconds"],"instructor":["Hand out the six business cards (invented local firms)","Circulate; push pairs who put everything in the middle","Debrief: which placement drew the most disagreement, and why?"],"source":"Your Fall 2025 activity sheet"},"exit":{"text":"In one sentence: what is the difference between the lowest cost and the lowest price?","source":"Your exit-ticket bank"},"voice":{"objectivesTitle":"By the end of today you can","promptStyle":"decision-forcing"}},"vignette":{"workingTitle":"Bayshore Marine Supply: chase price or build the service bay?","disguise":[{"real":"Bayshore Marine Supply","disguised":"Pelican Point Marine"},{"real":"Dana Whitfield","disguised":"Jordan Reyes"},{"real":"Clearwater","disguised":"a Gulf Coast city"}],"facts":[{"id":"F1","text":"Bayshore Marine Supply is a family-owned marine parts retailer in Clearwater, founded in 1994.","kind":"context","audience":"both","source":"Your consulting notes (2023)","sensitivity":"private"},{"id":"F2","text":"Annual revenue was $6.8 million in 2025.","kind":"number","audience":"both","source":"Company figures shared with permission","sensitivity":"private"},{"id":"F3","text":"Two big-box marine chains opened stores within 10 miles in 2024.","kind":"event","audience":"both","source":"Public news coverage","sensitivity":"public"},{"id":"F4","text":"Gross margin fell from 34% to 27% between 2023 and 2025.","kind":"number","audience":"both","source":"Company figures shared with permission","sensitivity":"private"},{"id":"F5","text":"The engine repair department earns a 52% margin and has a three-week waitlist.","kind":"number","audience":"both","source":"Your interview with the service manager","sensitivity":"private"},{"id":"F6","text":"Online sales are 9% of revenue.","kind":"number","audience":"both","source":"Company figures shared with permission","sensitivity":"private"},{"id":"F7","text":"By March, CEO Dana Whitfield must choose: match big-box prices on commodity parts, or expand repair and specialty parts and stop chasing price.","kind":"decision","audience":"both","source":"Your consulting notes (2023)","sensitivity":"private"},{"id":"F8","text":"The company expanded the service bay; revenue recovered to $7.4 million in 2026.","kind":"epilogue","audience":"instructor","source":"Follow-up call (2026)","sensitivity":"private"}],"questions":[{"lo":"LO6.2","q":"Which generic strategy is Pelican Point following today? Use two facts from the case.","analysis":"Mostly broad differentiation drifting toward price matching; the margin fall (F4) shows the cost race it cannot win.","facts":["F3","F4"]},{"lo":"LO6.4","q":"What is the risk of matching big-box prices on commodity parts?","analysis":"Stuck in the middle: the chains have scale (F3), so matching price erodes margin further (F4) without a cost advantage.","facts":["F3","F4"]},{"lo":"LO6.5","q":"Recommend a strategy for Jordan Reyes and name the first two value chain changes.","analysis":"Focused differentiation around service: repair margin and waitlist (F5) signal valued uniqueness; online sales (F6) stay small.","facts":["F5","F6"]}]},"library":[{"key":"Porter 1980","authors":"Porter, M. E.","year":1980,"title":"Competitive Strategy: Techniques for Analyzing Industries and Competitors","venue":"Free Press","type":"book","status":"verified","sensitivity":"public"},{"key":"Porter 1985","authors":"Porter, M. E.","year":1985,"title":"Competitive Advantage: Creating and Sustaining Superior Performance","venue":"Free Press","type":"book","status":"verified","sensitivity":"public"},{"key":"Barney 1991","authors":"Barney, J.","year":1991,"title":"Firm resources and sustained competitive advantage","venue":"Journal of Management, 17(1), 99-120","type":"article","status":"verified","sensitivity":"public"},{"key":"Whitlow & Haines 2022","authors":"Whitlow, R., & Haines, T.","year":2022,"title":"Hybrid strategies in Gulf Coast retail (PLANTED FAKE for this demo)","venue":"suggested by an AI search; no database has it","type":"article","status":"not-found","sensitivity":"public"},{"key":"Field notes 2023","authors":"Your notes","year":2023,"title":"Field notes, Bayshore engagement","venue":"private notebook","type":"note","status":"verified","sensitivity":"confidential"}],"memo":[{"id":"P1","tag":"mine","text":"Regional retailers facing big-box entry often respond by matching price, which my field work suggests is the wrong first move.","reviewed":true},{"id":"P2","tag":"source","text":"Generic strategy theory holds that a firm must choose between lower cost and differentiation to sustain an advantage (Porter, 1985).","reviewed":true},{"id":"P3","tag":"source","text":"Resources that are valuable, rare and hard to imitate explain why some firms sustain an advantage (Barney, 1991).","reviewed":true},{"id":"P4","tag":"ai","text":"Recent work finds hybrid strategies outperform pure strategies for Gulf Coast retailers (Whitlow & Haines, 2022).","reviewed":false},{"id":"P5","tag":"ai","text":"A service-led focus may let a regional firm escape the price war while keeping its customer relationships.","reviewed":false}],"roster":["Maya Thompson","Luis Ortega","Priya Nair"]};
+  var E = window.FacultyEngine, O = window.Ooxml;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var clone = function (x) { return JSON.parse(JSON.stringify(x)); };
+  var SAMPLE = null, S = null, deck = null, lastGood = null;
+
+  function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function () { el.classList.remove('on'); }, 2400); }
+  function fresh() {
+    var d = clone(SAMPLE);
+    d.fills = {}; d.edits = {}; d.assign = {};
+    return {
+      data: d, source: 'sample', cfg: { maxBullets: E.DEFAULTS.maxBullets, maxWords: E.DEFAULTS.maxWords, classMinutes: E.DEFAULTS.classMinutes, slidesPerObjective: E.DEFAULTS.slidesPerObjective, matchThreshold: E.DEFAULTS.matchThreshold, explainers: true },
+      approvals: {}, view: 'instructor', versions: [], editing: null, tab: 'deck',
+      caseText: null, memo: clone(SAMPLE.memo)
+    };
+  }
+
+  // ---------- deck ----------
+  function rebuild(label) {
+    var st = E.settings(S.cfg);
+    $('#fmtErr').textContent = st.errors.join('. ');
+    if (st.errors.length && lastGood) { render(); return; }
+    var next = E.buildDeck(S.data, S.cfg);
+    if (label && deck) {
+      var diff = E.diffDecks(deck, next);
+      if (!diff.same) S.versions.unshift({ n: S.versions.length + 1, label: label, diff: diff });
+    }
+    deck = next; lastGood = next;
+    render();
+  }
+  function setK(k, v) { var el = $('.kpi[data-k=' + k + '] b'); if (el.textContent !== String(v)) { el.textContent = v; var p = el.parentNode; p.classList.remove('flash'); void p.offsetWidth; p.classList.add('flash'); } }
+  var PROV = { publisher: ['info', 'Publisher'], yours: ['ok', 'Your material'], 'ai-draft': ['warn', 'AI draft'], gap: ['bad', 'Needs your material'] };
+  function statusOf(s) { if (s.gap) return ['bad', 'Needs your material']; var a = S.approvals[s.key]; if (!a) return ['grey', 'Draft']; return a === s.hash ? ['ok', 'Approved'] : ['warn', 'Changed since approval']; }
+  function render() {
+    if (!deck) return;
+    var g = E.gate(deck, S.approvals);
+    var cov = deck.coverage.filter(function (c) { return c.by !== 'gap'; }).length, byVig = deck.coverage.filter(function (c) { return c.by === 'vignette'; }).length;
+    setK('covered', cov + '/' + deck.coverage.length);
+    $('.kpi[data-k=covered] span').textContent = 'Objectives covered' + (byVig ? ' (' + byVig + ' by your vignette)' : '');
+    setK('slides', deck.stats.studentSlides + ' + ' + deck.stats.instructorOnly);
+    setK('gaps', deck.stats.gaps);
+    setK('ai', deck.stats.aiDraft);
+    setK('approved', g.approved + '/' + g.total);
+    setK('minutes', deck.stats.minutes);
+    $('#cntDeck').textContent = g.blockers.length; $('#cntDeck').className = 'cnt ' + (g.final ? 'ok' : 'bad');
+    $('#srcLabel').innerHTML = S.source === 'sample' ? 'Publisher deck: <b>' + esc(S.data.meta.publisher) + '</b>, ' + esc(S.data.meta.chapter) + ', ' + S.data.publisherSlides.length + ' slides.' : 'Loaded from your file: <b>' + esc(S.source) + '</b>, ' + S.data.publisherSlides.length + ' slides. Read in your browser; nothing was uploaded.';
+    $('#backSample').hidden = S.source === 'sample';
+    // format inputs (only when not focused, so typing is never interrupted)
+    [['#fBul', 'maxBullets'], ['#fWords', 'maxWords'], ['#fMin', 'classMinutes'], ['#fPer', 'slidesPerObjective']].forEach(function (p) { var el = $(p[0]); if (document.activeElement !== el) el.value = S.cfg[p[1]]; });
+    if (document.activeElement !== $('#fThr')) $('#fThr').value = S.cfg.matchThreshold;
+    $('#fThrV').textContent = Number(S.cfg.matchThreshold).toFixed(2);
+    $('#fExp').checked = !!S.cfg.explainers;
+    if (document.activeElement !== $('#objIn')) $('#objIn').value = S.data.objectives.map(function (o) { return o.id + ': ' + o.text; }).join('\n');
+    // coverage
+    var content = S.data.publisherSlides.filter(function (s) { return deck.metaSlides.indexOf(s.n) < 0; });
+    $('#covSum').textContent = cov + '/' + deck.coverage.length;
+    $('#cov').innerHTML = deck.coverage.map(function (c) {
+      var chips = c.slides.map(function (x) { return '<span class="chip info">slide ' + x.n + ' <button type="button" aria-label="Remove slide ' + x.n + ' from ' + esc(c.id) + '" data-unassign="' + esc(c.id) + '" data-n="' + x.n + '">×</button></span>'; }).join('');
+      var by = c.by === 'vignette' ? '<span class="chip ok">your vignette</span>' : c.by === 'gap' ? '<span class="chip bad">needs your material</span>' : '';
+      var opts = content.filter(function (s) { return !c.slides.some(function (x) { return x.n === s.n; }); }).map(function (s) { return '<option value="' + s.n + '">' + s.n + '. ' + esc(s.title.slice(0, 38)) + '</option>'; }).join('');
+      return '<div class="lo" data-lo="' + esc(c.id) + '"><div class="t"><b>' + esc(c.id) + '</b>' + esc(c.text) + '</div><div class="row">' + chips + by +
+        '<select aria-label="Add a slide to ' + esc(c.id) + '" data-assign="' + esc(c.id) + '"><option value="">+ slide</option>' + opts + '</select>' +
+        (c.manual ? '<button class="abtn ghost" style="padding:2px 7px;font-size:11.5px" type="button" data-reprop="' + esc(c.id) + '">use proposal</button>' : '') + '</div></div>';
+    }).join('');
+    $('#unused').textContent = deck.unusedSlides.length ? 'Publisher slides not used: ' + deck.unusedSlides.join(', ') + '. Add one to an objective above if you want it.' : 'Every publisher content slide is used.';
+    $('#vers').innerHTML = S.versions.length ? S.versions.slice(0, 8).map(function (v) {
+      var d = v.diff, parts = [];
+      if (d.changed.length) parts.push(d.changed.length + ' changed');
+      if (d.added.length) parts.push(d.added.length + ' added');
+      if (d.removed.length) parts.push(d.removed.length + ' removed');
+      return '<div><b>v' + (v.n + 1) + '</b> ' + esc(v.label) + ': ' + parts.join(', ') + ' <span title="' + esc(d.changed.concat(d.added, d.removed).join('; ')) + '">(' + esc(d.changed.concat(d.added, d.removed).slice(0, 2).join('; ')) + (d.changed.length + d.added.length + d.removed.length > 2 ? '…' : '') + ')</span></div>';
+    }).join('') : '<div><b>v1</b> First draft. Change anything and the new version lists what changed.</div>';
+    // gate
+    var gaps = g.blockers.filter(function (b) { return b.reason === 'needs your material'; }).length;
+    var notYet = g.blockers.filter(function (b) { return b.reason === 'not approved yet'; }).length;
+    var changed = g.blockers.filter(function (b) { return b.reason === 'changed since you approved it'; }).length;
+    $('#gateMsg').className = 'blk' + (g.final ? ' ok' : '');
+    $('#gateMsg').textContent = g.final ? 'Every slide approved. Final files are open.' : 'Blocked: ' + [gaps ? gaps + ' need your material' : '', notYet ? notYet + ' not approved yet' : '', changed ? changed + ' changed since approval' : ''].filter(Boolean).join(', ') + '.';
+    $$('[data-dl][data-final="1"]').forEach(function (b) { b.disabled = !g.final; });
+    $('#deckSum').textContent = deck.stats.slides + ' slides · ' + deck.stats.publisher + ' from the publisher · ' + deck.stats.aiDraft + ' AI drafts';
+    $$('.seg [data-view]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-view') === S.view)); });
+    renderSlides();
+  }
+  function bulletsHtml(s) {
+    return '<ul>' + s.bullets.map(function (b) { return '<li' + (b.lvl ? ' class="l1"' : '') + '>' + esc(b.text) + '</li>'; }).join('') + '</ul>';
+  }
+  function renderSlides() {
+    var instr = S.view === 'instructor';
+    var list = deck.slides.filter(function (s) { return instr || (!s.instructorOnly && !s.gap); });
+    var pubName = (S.data.meta.publisher || '').replace(/\s*\(invented publisher sample\)/, '');
+    $('#slides').innerHTML = list.map(function (s, i) {
+      var st = statusOf(s), pv = PROV[s.provenance];
+      var src = s.provenance === 'publisher' ? 'Adapted from ' + pubName + ', ' + s.source.replace('Publisher ', '') : (instr ? s.source : '');
+      var mini;
+      if (S.editing === s.key) {
+        mini = '<label class="field">First line is the title; each further line is a bullet<textarea class="ta" rows="7" data-edit-ta="' + esc(s.key) + '">' + esc([s.title].concat(s.bullets.map(function (b) { return b.text; })).join('\n')) + '</textarea></label>' +
+          '<div class="acts"><button class="abtn pri" type="button" data-save="' + esc(s.key) + '">Save edit</button><button class="abtn" type="button" data-cancel="1">Cancel</button></div>';
+      } else if (s.gap) {
+        mini = '<div class="mini"><h4>' + esc(s.title) + '</h4><p style="font-size:12px;color:#b42318;margin:0">' + esc((s.notes.filter(function (n) { return /^Needs your material/.test(n); })[0] || 'Needs your material').replace(/^Needs your material: /, '')) + '</p></div>' +
+          '<label class="field">Your ' + (s.kind === 'example' ? 'example' : 'material') + ' (one bullet per line)<textarea class="ta" rows="3" data-fill-ta="' + esc(s.key) + '" placeholder="e.g. A Tampa credit union: same products as the big banks, wins on who it serves"></textarea></label>' +
+          '<div class="acts"><button class="abtn pri" type="button" data-fill="' + esc(s.key) + '">Add mine</button><button class="abtn" type="button" data-skip="' + esc(s.key) + '">Skip this slide</button></div><div class="err" data-fill-err="' + esc(s.key) + '"></div>';
+      } else {
+        mini = '<div class="mini' + (s.kind === 'title' ? ' title' : '') + '">' + (instr && s.instructorOnly ? '<span class="tag">INSTRUCTOR ONLY</span>' : '') +
+          '<h4>' + esc(s.title) + '</h4>' + (s.kind === 'title' ? '<p>' + esc(s.subtitle || '') + '</p>' : bulletsHtml(s)) + (src ? '<div class="src">' + esc(src) + '</div>' : '') + '</div>';
+      }
+      var notes = instr && s.notes.length && S.editing !== s.key ? '<div class="notes"><b>INSTRUCTOR NOTES</b>' + s.notes.map(function (n) { return '<div>' + esc(n) + '</div>'; }).join('') + '</div>' : '';
+      var acts = s.gap || S.editing === s.key ? '' : '<div class="acts">' + (S.approvals[s.key] === s.hash ? '<button class="abtn" type="button" data-unapprove="' + esc(s.key) + '">Undo approval</button>' : '<button class="abtn ok" type="button" data-approve="' + esc(s.key) + '">Approve</button>') +
+        (s.kind !== 'title' ? '<button class="abtn" type="button" data-editk="' + esc(s.key) + '">Edit</button>' : '') + '</div>';
+      return '<div class="sc' + (S.approvals[s.key] === s.hash ? ' appr' : '') + (s.gap ? ' gap' : '') + (s.instructorOnly ? ' io' : '') + '" data-key="' + esc(s.key) + '">' +
+        '<div class="meta"><span class="chip grey mono">' + (i + 1) + '</span>' + (s.lo ? '<span class="chip info">' + esc(s.lo) + '</span>' : '') + '<span class="chip ' + pv[0] + '">' + pv[1] + '</span>' +
+        (s.instructorOnly ? '<span class="chip mar">Instructor only</span>' : '') + '<span class="chip ' + st[0] + '" data-status>' + st[1] + '</span><span class="mins">' + (s.minutes ? s.minutes + ' min' : '') + '</span></div>' +
+        mini + notes + acts + '</div>';
+    }).join('');
+  }
+  function download(bytes, name, mime) {
+    var url = URL.createObjectURL(new Blob([bytes], { type: mime }));
+    var a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1500);
+  }
+  var PPTX = 'application/vnd.openxmlformats-officedocument.presentationml.presentation', DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  function exportDeck(kind, final) {
+    var when = new Date().toISOString();
+    if (kind === 'guide') {
+      var gd = E.guideDoc(deck, { final: final, approvals: S.approvals, when: when });
+      if (!gd.ok) return toast('Not yet: ' + gd.reasons[0]);
+      download(O.docx(gd.doc), gd.fileName, DOCX); toast('Downloaded ' + gd.fileName); return;
+    }
+    var m = E.pptxModel(deck, { version: kind, final: final, approvals: S.approvals, when: when });
+    if (!m.ok) return toast('Not yet: ' + m.reasons[0]);
+    download(O.pptx(m.deck), m.fileName, PPTX); toast('Downloaded ' + m.fileName + ' (' + m.deck.slides.length + ' slides)');
+  }
+  function inflateRaw(u8) {
+    if (typeof DecompressionStream === 'undefined') return Promise.reject(new Error('This browser cannot read compressed files. Try Chrome, Edge or a recent Safari.'));
+    return new Response(new Blob([u8]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer().then(function (b) { return new Uint8Array(b); });
+  }
+
+  // ---------- vignette ----------
+  function caseInit() { var c = E.buildCase(S.data.vignette); S.caseText = { student: c.studentText, teaching: c.teachingText }; }
+  function issuesHtml(r) {
+    if (!r.issues.length) return '<div class="iss clean">Consistent with the master record: every figure traced, no real names, nothing instructor-only.</div>';
+    return r.issues.map(function (i) { return '<div class="iss ' + i.severity + '" data-type="' + i.type + '">' + (i.severity === 'block' ? 'Blocked: ' : 'Note: ') + esc(i.detail) + '</div>'; }).join('');
+  }
+  function renderCase() {
+    var v = S.data.vignette;
+    $('#facts').innerHTML = v.facts.map(function (f) {
+      return '<div class="fact"><span class="id">' + f.id + '</span>' + esc(f.text) + '<small>' + esc(f.source) + ' · ' + (f.audience === 'instructor' ? '<span class="chip mar">instructor only</span>' : '<span class="chip ok">both versions</span>') + ' · ' + esc(f.sensitivity) + '</small></div>';
+    }).join('');
+    if (!$('#disg').children.length) $('#disg').innerHTML = v.disguise.map(function (m, i) { return '<div class="disg"><input value="' + esc(m.real) + '" disabled aria-label="Real name ' + (i + 1) + '"><span>→</span><input value="' + esc(m.disguised) + '" data-disg="' + i + '" aria-label="Disguised name ' + (i + 1) + '"></div>'; }).join('');
+    if (document.activeElement !== $('#stuTa')) $('#stuTa').value = S.caseText.student;
+    if (document.activeElement !== $('#teaTa')) $('#teaTa').value = S.caseText.teaching;
+    var rs = E.checkCase(S.caseText.student, v, 'student'), rt = E.checkCase(S.caseText.teaching, v, 'teaching');
+    $('#stuIss').innerHTML = issuesHtml(rs); $('#teaIss').innerHTML = issuesHtml(rt);
+    var blocks = rs.issues.concat(rt.issues).filter(function (i) { return i.severity === 'block'; }).length;
+    $('#cntCase').textContent = blocks; $('#cntCase').className = 'cnt ' + (blocks ? 'bad' : 'ok');
+    $('#caseFinal').disabled = !!blocks;
+    $('#caseGate').className = 'blk' + (blocks ? '' : ' ok');
+    $('#caseGate').textContent = blocks ? blocks + ' blocking issue' + (blocks > 1 ? 's' : '') + ' before final.' : 'Both documents agree with the record.';
+  }
+
+  // ---------- research ----------
+  var TAGS = [['mine', 'Your idea'], ['source', 'Verified source'], ['public', 'Public evidence'], ['ai', 'AI draft']];
+  function renderLib() {
+    $('#lib').innerHTML = S.data.library.map(function (e) {
+      var chip = e.status === 'verified' ? (e.sensitivity === 'confidential' ? '<span class="chip mar">confidential, verified</span>' : '<span class="chip ok">verified</span>') : e.status === 'not-found' ? '<span class="chip bad">not found anywhere</span>' : '<span class="chip warn">unverified</span>';
+      return '<div class="fact"><span class="id">' + esc(e.key) + '</span>' + esc(e.title) + '<small>' + esc(e.authors) + ' · ' + esc(e.venue) + ' · ' + chip + '</small></div>';
+    }).join('');
+  }
+  function renderMemo(rebuildEditors) {
+    if (rebuildEditors) $('#memo').innerHTML = S.memo.map(function (p, i) {
+      return '<div class="para" data-para="' + i + '"><div class="row"><b class="mono" style="font-size:12px">' + esc(p.id) + '</b><select data-tag="' + i + '" aria-label="Provenance of ' + esc(p.id) + '">' + TAGS.map(function (t) { return '<option value="' + t[0] + '"' + (t[0] === p.tag ? ' selected' : '') + '>' + t[1] + '</option>'; }).join('') + '</select>' +
+        '<label class="check" style="font-size:12px"><input type="checkbox" data-rev="' + i + '"' + (p.reviewed ? ' checked' : '') + '> reviewed by me</label></div>' +
+        '<textarea class="ta" rows="2" data-ptext="' + i + '" aria-label="Text of ' + esc(p.id) + '">' + esc(p.text) + '</textarea></div>';
+    }).join('');
+    var chk = E.checkMemo(S.memo, S.data.library);
+    $('#matrix').innerHTML = chk.rows.map(function (r) {
+      return '<tr data-row="' + esc(r.id) + '"><td class="mono">' + esc(r.id) + '</td><td>' + esc(r.label) + (r.tag === 'ai' ? (r.reviewed ? ' <span class="chip ok">reviewed</span>' : ' <span class="chip warn">not reviewed</span>') : '') + '</td><td>' + (esc(r.sources.join('; ')) || '<span style="color:#8a93a3">none</span>') + '</td><td>' +
+        (r.issues.length ? r.issues.map(function (i) { return '<div class="iss ' + i.severity + '" style="margin-bottom:3px">' + esc(i.detail) + '</div>'; }).join('') : '<span class="chip ok">clear</span>') + '</td></tr>';
+    }).join('');
+    var blocks = chk.issues.filter(function (i) { return i.severity === 'block'; }).length;
+    $('#cntRes').textContent = blocks; $('#cntRes').className = 'cnt ' + (blocks ? 'bad' : 'ok');
+    $('#memoGate').className = 'blk' + (chk.final ? ' ok' : '');
+    $('#memoGate').textContent = chk.final ? 'Every citation verified and every AI paragraph reviewed.' : blocks + ' open item' + (blocks > 1 ? 's' : '') + ' before final.';
+    $('#memoFinal').disabled = !chk.final;
+  }
+
+  // ---------- privacy and costs ----------
+  var MATERIALS = [
+    ['Publisher slides and test banks', { licensed: true }], ['Your decks, notes and syllabi', { licensed: true }], ['Unpublished research drafts', { unpublished: true }],
+    ['Consulting notes and company figures', { confidential: true }], ['Interview notes and transcripts', { interview: true }], ['Student names, IDs and submissions', { studentInfo: true }], ['Published articles and public data', {}]
+  ];
+  function renderTiers() {
+    $('#tiers').innerHTML = MATERIALS.map(function (m) {
+      var t = E.tierFor(m[1]), c = t.tier === 'restricted' ? 'bad' : t.tier === 'private' ? 'warn' : 'ok';
+      return '<div class="fact"><b>' + esc(m[0]) + '</b> <span class="chip ' + c + '">' + t.label + '</span><small>' + esc(t.route) + '</small></div>';
+    }).join('');
+  }
+  function renderRedact() {
+    var r = E.redact($('#redIn').value, S.data.roster);
+    $('#redOut').textContent = r.text; $('#redCount').textContent = r.hits.length;
+  }
+  function renderCost() {
+    var r = E.monthlyCost({ decks: $('#cDecks').value, pagesPerDeck: $('#cPages').value, cases: $('#cCases').value, memos: $('#cMemos').value, model: $('#cModel').value, hosting: $('#cHost').value });
+    $('#costErr').textContent = r.ok ? '' : r.errors.join('. ');
+    if (!r.ok) return;
+    $('#costBody').innerHTML = r.lines.map(function (l) { return '<tr><td>' + esc(l.item) + '</td><td>' + esc(l.detail) + '</td><td class="n">$' + l.usd.toFixed(2) + '</td></tr>'; }).join('') +
+      '<tr class="tot"><td>Total on ' + esc(r.model) + '</td><td></td><td class="n" id="costTotal">$' + r.total.toFixed(2) + '</td></tr>';
+  }
+
+  // ---------- events ----------
+  function bind() {
+    $$('.side [data-tab]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        S.tab = b.getAttribute('data-tab');
+        $$('.side [data-tab]').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+        $$('[data-pane]').forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== S.tab; });
+        $('#kpis').hidden = S.tab !== 'deck';
+      });
+    });
+    var num = function (sel, key, label) {
+      $(sel).addEventListener('input', function () { var v = $(sel).value; S.cfg[key] = v === '' ? NaN : Number(v); rebuild(); });
+      $(sel).addEventListener('change', function () { S.cfg[key] = Number($(sel).value); rebuildFrom(lastBefore, label + ' ' + $(sel).value); });
+    };
+    // versions are recorded against the deck as it was before the field changed
+    var lastBefore = null;
+    $$('#fBul,#fWords,#fMin,#fPer,#fThr').forEach(function (el) { el.addEventListener('focus', function () { lastBefore = deck; }); });
+    function rebuildFrom(before, label) {
+      if (!before) before = deck;
+      var st = E.settings(S.cfg); if (st.errors.length) { render(); return; }
+      var next = E.buildDeck(S.data, S.cfg), d = E.diffDecks(before, next);
+      if (!d.same) S.versions.unshift({ n: S.versions.length + 1, label: label, diff: d });
+      deck = next; lastGood = next; lastBefore = next; render();
+    }
+    num('#fBul', 'maxBullets', 'Bullets per slide'); num('#fWords', 'maxWords', 'Words per bullet'); num('#fMin', 'classMinutes', 'Class minutes'); num('#fPer', 'slidesPerObjective', 'Slides per objective');
+    $('#fThr').addEventListener('input', function () { S.cfg.matchThreshold = Number($('#fThr').value); rebuild(); });
+    $('#fThr').addEventListener('change', function () { rebuildFrom(lastBefore, 'Match strictness ' + Number($('#fThr').value).toFixed(2)); });
+    $('#fExp').addEventListener('change', function () { var before = deck; S.cfg.explainers = $('#fExp').checked; rebuildFrom(before, 'Explainers ' + (S.cfg.explainers ? 'on' : 'off')); });
+    $('#objIn').addEventListener('input', function () {
+      var lines = $('#objIn').value.split('\n').map(function (l) { return l.trim(); }).filter(Boolean), objs = [], bad = [];
+      lines.forEach(function (l, i) {
+        var m = /^([A-Za-z]{1,4}\s?\d+(?:\.\d+)?)\s*[:.)-]\s*(.+)$/.exec(l);
+        if (m && m[2].trim().length >= 8) objs.push({ id: m[1].replace(/\s/g, ''), text: m[2].trim() });
+        else bad.push('line ' + (i + 1) + ' needs "ID: objective" with at least a few words');
+      });
+      $('#objErr').textContent = bad.length ? 'Skipped ' + bad.join('; ') + '.' : '';
+      if (!objs.length) { $('#objErr').textContent = 'At least one objective is needed; keeping the last good list.'; return; }
+      S.data.objectives = objs; S.data.assign = {}; rebuild();
+    });
+    $('#objIn').addEventListener('focus', function () { lastBefore = deck; });
+    $('#objIn').addEventListener('change', function () { rebuildFrom(lastBefore, 'Objectives edited'); });
+    $('#cov').addEventListener('change', function (e) {
+      var lo = e.target.getAttribute('data-assign'); if (!lo || !e.target.value) return;
+      var cur = deck.coverage.find(function (c) { return c.id === lo; }).slides.map(function (x) { return x.n; });
+      var n = Number(e.target.value), before = deck;
+      Object.keys(S.data.assign).forEach(function (k) { if (k !== lo) S.data.assign[k] = S.data.assign[k].filter(function (x) { return x !== n; }); });
+      deck.coverage.forEach(function (c) { if (c.id !== lo && !S.data.assign[c.id] && c.slides.some(function (x) { return x.n === n; })) S.data.assign[c.id] = c.slides.map(function (x) { return x.n; }).filter(function (x) { return x !== n; }); });
+      S.data.assign[lo] = cur.concat(n);
+      rebuildFrom(before, lo + ': slide ' + n + ' added');
+    });
+    $('#cov').addEventListener('click', function (e) {
+      var t = e.target, before = deck;
+      if (t.hasAttribute('data-unassign')) {
+        var lo = t.getAttribute('data-unassign'), n = Number(t.getAttribute('data-n'));
+        S.data.assign[lo] = deck.coverage.find(function (c) { return c.id === lo; }).slides.map(function (x) { return x.n; }).filter(function (x) { return x !== n; });
+        rebuildFrom(before, lo + ': slide ' + n + ' removed');
+      } else if (t.hasAttribute('data-reprop')) { delete S.data.assign[t.getAttribute('data-reprop')]; rebuildFrom(before, t.getAttribute('data-reprop') + ': back to the proposal'); }
+    });
+    $$('.seg [data-view]').forEach(function (b) { b.addEventListener('click', function () { S.view = b.getAttribute('data-view'); render(); }); });
+    $('#approveAll').addEventListener('click', function () {
+      var n = 0; deck.slides.forEach(function (s) { if (!s.gap && S.approvals[s.key] !== s.hash) { S.approvals[s.key] = s.hash; n++; } });
+      render(); toast(n ? 'Approved ' + n + ' slides as they are now' : 'Nothing left to approve');
+    });
+    $('#slides').addEventListener('click', function (e) {
+      var t = e.target.closest('button'); if (!t) return;
+      var k, before = deck;
+      if ((k = t.getAttribute('data-approve'))) { var s = deck.slides.find(function (x) { return x.key === k; }); S.approvals[k] = s.hash; render(); }
+      else if ((k = t.getAttribute('data-unapprove'))) { delete S.approvals[k]; render(); }
+      else if ((k = t.getAttribute('data-editk'))) { S.editing = k; render(); var ta = $('[data-edit-ta]'); if (ta) ta.focus(); }
+      else if (t.hasAttribute('data-cancel')) { S.editing = null; render(); }
+      else if ((k = t.getAttribute('data-save'))) {
+        var lines = $('[data-edit-ta]').value.split('\n').map(function (l) { return l.replace(/^[-•*]\s*/, '').trim(); }).filter(Boolean);
+        if (!lines.length) return toast('A slide needs at least a title');
+        S.data.edits[k] = { title: lines[0], bullets: lines.slice(1) }; S.editing = null;
+        rebuildFrom(before, 'Edited "' + lines[0] + '"');
+      } else if ((k = t.getAttribute('data-fill'))) {
+        var v = $('[data-fill-ta="' + k + '"]').value.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+        if (!v.length || v.join(' ').length < 12) { $('[data-fill-err="' + k + '"]').textContent = 'Write at least a short sentence, or skip the slide.'; return; }
+        S.data.fills[k] = { bullets: v }; rebuildFrom(before, 'Your material added');
+      } else if ((k = t.getAttribute('data-skip'))) { S.data.fills[k] = { skip: true }; rebuildFrom(before, 'Slide skipped by you'); }
+    });
+    $$('[data-dl]').forEach(function (b) { b.addEventListener('click', function () { exportDeck(b.getAttribute('data-dl'), b.getAttribute('data-final') === '1'); }); });
+    $('#pptxIn').addEventListener('change', function () {
+      var f = $('#pptxIn').files[0]; if (!f) return;
+      $('#srcErr').textContent = '';
+      if (!/\.pptx$/i.test(f.name)) { $('#srcErr').textContent = 'Please choose a .pptx file (PowerPoint 2007 or later).'; return; }
+      f.arrayBuffer().then(function (buf) { return O.readPptx(new Uint8Array(buf), inflateRaw); }).then(function (r) {
+        var slides = r.slides.map(function (s) { return { n: s.n, title: s.title, bullets: s.bullets.map(function (b) { return b.text; }), notes: s.notes }; });
+        var v = E.validate({ publisherSlides: slides });
+        if (!v.slides.length) { $('#srcErr').textContent = 'No slides with text were found in ' + f.name + '.'; return; }
+        var before = deck;
+        S.data.publisherSlides = slides; S.data.assign = {}; S.source = f.name;
+        $('#srcErr').textContent = r.problems.concat(v.problems).slice(0, 3).join('; ');
+        rebuildFrom(before, 'Loaded ' + f.name);
+        toast('Read ' + slides.length + ' slides from ' + f.name + ' in your browser');
+      }).catch(function (err) { $('#srcErr').textContent = 'Could not read ' + f.name + ': ' + err.message; });
+      $('#pptxIn').value = '';
+    });
+    $('#sampleDeckBtn').addEventListener('click', function () {
+      var bytes = O.pptx({ title: SAMPLE.meta.publisher, author: 'Invented publisher sample', slides: SAMPLE.publisherSlides.map(function (s, i) { return { layout: i === 0 ? 'title' : 'content', title: s.title, subtitle: SAMPLE.meta.publisher, bullets: s.bullets.map(function (b) { return { text: b }; }), notes: s.notes ? [s.notes] : [] }; }) });
+      download(bytes, 'sample-publisher-chapter-6.pptx', PPTX); toast('Sample publisher deck downloaded. Load it back with "Load a .pptx".');
+    });
+    $('#backSample').addEventListener('click', function () { var before = deck; S.data.publisherSlides = clone(SAMPLE.publisherSlides); S.data.assign = {}; S.source = 'sample'; $('#srcErr').textContent = ''; rebuildFrom(before, 'Back to the sample deck'); });
+    $('#resetBtn').addEventListener('click', function () { S = fresh(); caseInit(); $('#disg').innerHTML = ''; deck = null; rebuild(); renderCase(); renderLib(); renderMemo(true); renderCost(); renderRedact(); $('#objErr').textContent = ''; $('#srcErr').textContent = ''; toast('Back to the starting sample'); });
+    // vignette
+    $('#stuTa').addEventListener('input', function () { S.caseText.student = $('#stuTa').value; renderCase(); });
+    $('#teaTa').addEventListener('input', function () { S.caseText.teaching = $('#teaTa').value; renderCase(); });
+    $('#regen').addEventListener('click', function () { caseInit(); $('#stuTa').value = S.caseText.student; $('#teaTa').value = S.caseText.teaching; renderCase(); toast('Both documents rebuilt from the master record'); });
+    $('#disg').addEventListener('input', function (e) {
+      var i = e.target.getAttribute('data-disg'); if (i == null) return;
+      var v = e.target.value.trim();
+      if (v.length < 3) { $('#disgErr').textContent = 'A disguise needs at least 3 characters.'; return; }
+      if (S.data.vignette.disguise.some(function (m) { return m.real.toLowerCase() === v.toLowerCase(); })) { $('#disgErr').textContent = 'That is a real name from your record; choose a different disguise.'; return; }
+      $('#disgErr').textContent = '';
+      S.data.vignette.disguise[i].disguised = v; caseInit(); $('#stuTa').value = S.caseText.student; $('#teaTa').value = S.caseText.teaching; renderCase(); rebuild();
+    });
+    function caseDl(final) {
+      var r = E.caseDocs(S.data.vignette, S.caseText.student, S.caseText.teaching, { final: final, when: new Date().toISOString() });
+      if (!r.ok) return toast('Not yet: ' + r.reasons[0]);
+      download(O.docx(r.student), 'student-case-' + (final ? 'final' : 'DRAFT') + '.docx', DOCX);
+      setTimeout(function () { download(O.docx(r.teaching), 'teaching-note-' + (final ? 'final' : 'DRAFT') + '.docx', DOCX); }, 400);
+      toast('Downloaded the student case and the teaching note');
+    }
+    $('#caseDraft').addEventListener('click', function () { caseDl(false); });
+    $('#caseFinal').addEventListener('click', function () { caseDl(true); });
+    // research
+    $('#memo').addEventListener('input', function (e) { var i = e.target.getAttribute('data-ptext'); if (i == null) return; S.memo[i].text = e.target.value; S.memo[i].reviewed = S.memo[i].tag === 'ai' ? false : S.memo[i].reviewed; var cb = $('[data-rev="' + i + '"]'); if (cb) cb.checked = S.memo[i].reviewed; renderMemo(false); });
+    $('#memo').addEventListener('change', function (e) {
+      var i;
+      if ((i = e.target.getAttribute('data-tag')) != null) { S.memo[i].tag = e.target.value; renderMemo(false); }
+      else if ((i = e.target.getAttribute('data-rev')) != null) { S.memo[i].reviewed = e.target.checked; renderMemo(false); }
+    });
+    $('#addPara').addEventListener('click', function () { S.memo.push({ id: 'P' + (S.memo.length + 1), tag: 'mine', text: '', reviewed: true }); renderMemo(true); var ta = $('[data-ptext="' + (S.memo.length - 1) + '"]'); if (ta) ta.focus(); });
+    function memoDl(final) {
+      var r = E.memoDoc(S.memo, S.data.library, { final: final, when: new Date().toISOString() });
+      if (!r.ok) return toast('Not yet: ' + r.reasons[0]);
+      download(O.docx(r.doc), 'research-memo-' + (final ? 'final' : 'DRAFT') + '.docx', DOCX); toast('Downloaded the memo with its source matrix');
+    }
+    $('#memoDraft').addEventListener('click', function () { memoDl(false); });
+    $('#memoFinal').addEventListener('click', function () { memoDl(true); });
+    // privacy and costs
+    $('#redIn').addEventListener('input', renderRedact);
+    $$('#cDecks,#cPages,#cCases,#cMemos,#cModel,#cHost').forEach(function (el) { el.addEventListener('input', renderCost); el.addEventListener('change', renderCost); });
+  }
+
+  function start(data) {
+    SAMPLE = data; S = fresh(); caseInit();
+    $('#cModel').innerHTML = Object.keys(E.PRICES).map(function (k) { return '<option value="' + k + '">' + E.PRICES[k].label + '</option>'; }).join('');
+    bind(); rebuild(); renderCase(); renderLib(); renderMemo(true); renderTiers(); renderRedact(); renderCost();
+    var c = E.monthlyCost({ decks: 4, pagesPerDeck: 60, cases: 2, memos: 4, model: 'claude-opus-5-5', hosting: 14 });
+    if (c.ok) $('#monthly').textContent = 'about $' + Math.round(c.total);
+  }
+  if (location.protocol === 'file:') start(FALLBACK);
+  else fetch('data/course.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(start).catch(function () { start(FALLBACK); });
+})();
+</script>
+</body>
+</html>

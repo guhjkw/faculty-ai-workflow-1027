@@ -1,0 +1,26 @@
+
+1. Instructor deck (final) in python-pptx
+  PASS widescreen 16:9 (12192000 x 6858000 EMU)
+  PASS 23 slides, the first on the Title Slide layout
+  PASS every content slide uses Title and Content with a real title placeholder
+  PASS the answer key is a hidden slide
+  PASS and carries the INSTRUCTOR ONLY tag
+  PASS speaker notes hold the instructor-only content
+  PASS the body placeholder holds the 5 student-facing bullets
+  PASS the source line says where the slide came from and that it is approved
+
+2. Student deck (draft)
+  PASS 21 slides and no notes on any of them
+  PASS no answer key in the student copy
+  PASS every slide is marked DRAFT
+
+3. Word files in python-docx
+  PASS the guide opens with a Title and uses real Heading styles
+  PASS its timing table adds to 75 minutes
+  PASS its source record has a row per slide plus a header
+  PASS the student case is disguised and has no epilogue
+  PASS its questions are a real numbered list
+  PASS the teaching note carries the 8-fact master record
+  PASS the research memo lists two verified references and no fake
+
+18 file checks: 18 passed, 0 failed
